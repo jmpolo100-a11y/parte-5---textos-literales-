@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - 3D Interface</title>
+    <title>Saber 11 - 3D Elite v4</title>
     <style>
         :root {
-            --bg: #E0E5EC; /* Color base para efecto 3D/Neumórfico */
+            --bg: #E0E5EC;
             --c-113: #FFD700; --c-114: #4CAF50; --c-115: #2196F3;
             --c-116: #FF9800; --c-117: #9C27B0; --c-118: #E91E63;
             --c-119: #00BCD4;
@@ -15,103 +15,113 @@
         body {
             margin: 0;
             background-color: var(--bg);
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: -apple-system, system-ui, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* Contenedor de Texto con Efecto 3D */
+        /* Recuadro de Texto 3D */
         .text-3d-box {
-            margin: 30px 20px 140px 20px; /* Margen inferior amplio para las burbujas */
-            padding: 35px 25px;
+            margin: 30px 15px 150px 15px;
+            padding: 30px 20px;
             background: #fdfcf9;
-            border-radius: 25px;
-            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), 
-                       -9px -9px 16px rgba(255,255,255, 0.5),
-                       inset 0 0 0 1px rgba(0,0,0,0.05);
-            max-width: 600px;
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px rgba(163,177,198,0.5), 
+                       -10px -10px 20px rgba(255,255,255, 0.6);
+            max-width: 550px;
             text-align: justify;
-            line-height: 1.8;
-            font-size: 1.15rem;
+            line-height: 1.6;
+            font-size: 1rem; /* Tamaño de letra más pequeño */
             color: #333;
         }
 
-        h1 { font-size: 1.8rem; margin-top: 0; color: #1a1a1a; }
+        h1 { 
+            font-size: 1.5rem; 
+            text-align: center; /* Título centrado */
+            margin-top: 0; 
+            color: #000;
+            margin-bottom: 25px;
+        }
 
-        /* Barra de Burbujas Flotante y Semi-transparente */
+        /* Barra de Burbujas Flotante */
         .bubbles-footer {
             position: fixed;
             bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 500px;
+            width: 92%;
+            max-width: 480px;
             background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 15px;
-            border-radius: 50px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 12px;
+            border-radius: 40px;
             display: flex;
             justify-content: space-around;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.4);
             z-index: 1000;
         }
 
         .q-bubble {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 0.85rem;
-            color: #555;
-            border: 3px solid #ddd;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            flex-shrink: 0;
+            font-size: 0.8rem;
+            color: #444;
+            border: 2px solid #ddd;
+            transition: all 0.4s ease;
         }
 
-        /* Estados de burbuja: Relleno con delineado conservado */
         .q-bubble.done { color: white !important; background-color: #27ae60 !important; }
         .q-bubble.error { color: white !important; background-color: #c0392b !important; }
 
-        /* Resaltados con brillo */
-        .hl { border-radius: 6px; transition: background 0.6s ease; }
-        .hl-active-113 { background: var(--c-113); box-shadow: 0 0 8px var(--c-113); }
-        .hl-active-114 { background: var(--c-114); box-shadow: 0 0 8px var(--c-114); }
-        .hl-active-115 { background: var(--c-115); box-shadow: 0 0 8px var(--c-115); }
-        .hl-active-116 { background: var(--c-116); box-shadow: 0 0 8px var(--c-116); }
-        .hl-active-117 { background: var(--c-117); box-shadow: 0 0 8px var(--c-117); }
-        .hl-active-118 { background: var(--c-118); box-shadow: 0 0 8px var(--c-118); }
-        .hl-active-119 { background: var(--c-119); box-shadow: 0 0 8px var(--c-119); }
+        /* Resaltados */
+        .hl { border-radius: 4px; transition: background 0.6s ease; }
+        .hl-active-113 { background: var(--c-113); }
+        .hl-active-114 { background: var(--c-114); }
+        .hl-active-115 { background: var(--c-115); }
+        .hl-active-116 { background: var(--c-116); }
+        .hl-active-117 { background: var(--c-117); }
+        .hl-active-118 { background: var(--c-118); }
+        .hl-active-119 { background: var(--c-119); }
 
-        /* Bottom Sheet Moderno */
+        /* Bottom Sheet */
         .bottom-sheet {
             position: fixed;
             bottom: -100%;
             left: 0;
             width: 100%;
             background: white;
-            border-top-left-radius: 35px;
-            border-top-right-radius: 35px;
-            padding: 30px 25px;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 25px;
             box-sizing: border-box;
-            box-shadow: 0 -15px 40px rgba(0,0,0,0.2);
-            transition: bottom 0.5s cubic-bezier(0, 0.6, 0.4, 1);
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+            transition: bottom 0.4s cubic-bezier(0, 0.6, 0.4, 1);
             z-index: 2000;
         }
         .bottom-sheet.open { bottom: 0; }
 
         .option-btn {
-            width: 100%; padding: 16px; margin: 10px 0;
-            border: 1px solid #eee; border-radius: 15px;
+            width: 100%; padding: 15px; margin: 8px 0;
+            border: 1px solid #eee; border-radius: 12px;
             background: #f8f9fa; font-weight: 600; text-align: left;
+            color: #000; /* Texto en negro solicitado */
+            font-size: 0.95rem;
+            transition: 0.2s;
         }
+
+        /* Feedback de Relleno */
+        .btn-correct { background-color: #27ae60 !important; color: white !important; border: none; }
+        .btn-incorrect { background-color: #c0392b !important; color: white !important; border: none; }
 
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -119,9 +129,10 @@
         }
 
         #toast {
-            position: fixed; top: 40px; left: 50%; transform: translateX(-50%);
-            padding: 10px 35px; border-radius: 50px; color: white;
+            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
+            padding: 8px 25px; border-radius: 50px; color: white;
             font-weight: 800; display: none; z-index: 3000;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -170,7 +181,7 @@
         const item = data[index];
         const content = document.getElementById('sheet-content');
         content.innerHTML = `
-            <p style="font-weight:800; font-size:1.2rem; margin-bottom:20px;">${item.id}. ${item.q}</p>
+            <p style="font-weight:800; font-size:1.1rem; margin-bottom:15px; color:#000;">${item.id}. ${item.q}</p>
             ${item.options.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}
         `;
         document.getElementById('sheet').classList.add('open');
@@ -188,18 +199,18 @@
         const bubble = document.getElementById(`bubble-${index}`);
 
         if (isCorrect) {
-            btn.style.background = "#27ae60"; btn.style.color = "white";
+            btn.classList.add('btn-correct');
             showToast("Melo", "#27ae60");
             document.getElementById(`text-${item.id}`).classList.add(`hl-active-${item.id}`);
             
             setTimeout(() => {
                 bubble.classList.add('done');
                 bubble.style.borderColor = `var(--c-${item.id})`;
-                bubble.style.borderWidth = "4px";
+                bubble.style.borderWidth = "3px";
             }, 300);
             if(navigator.vibrate) navigator.vibrate(50);
         } else {
-            btn.style.background = "#c0392b"; btn.style.color = "white";
+            btn.classList.add('btn-incorrect');
             showToast("Nel, pilas", "#c0392b");
             bubble.classList.add('error');
             bubble.style.borderColor = "#c0392b";
