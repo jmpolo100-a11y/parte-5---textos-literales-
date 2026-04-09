@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Elite Mobile</title>
+    <title>Saber 11 - 3D Interface</title>
     <style>
         :root {
-            --paper: #FDFCF9;
-            --text: #1a1a1a;
-            /* Colores de resaltado para bordes y texto */
+            --bg: #E0E5EC; /* Color base para efecto 3D/Neumórfico */
             --c-113: #FFD700; --c-114: #4CAF50; --c-115: #2196F3;
             --c-116: #FF9800; --c-117: #9C27B0; --c-118: #E91E63;
             --c-119: #00BCD4;
@@ -16,140 +14,114 @@
 
         body {
             margin: 0;
-            background-color: var(--paper);
-            font-family: -apple-system, system-ui, sans-serif;
-            color: var(--text);
+            background-color: var(--bg);
+            font-family: 'Segoe UI', system-ui, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
 
-        /* Contenedor de lectura mejorado */
-        .content {
-            padding: 30px 20px;
-            padding-right: 80px;
-            max-width: 600px; /* Evita que las líneas sean muy largas */
-            text-align: justify; /* Justificado solicitado */
+        /* Contenedor de Texto con Efecto 3D */
+        .text-3d-box {
+            margin: 30px 20px 140px 20px; /* Margen inferior amplio para las burbujas */
+            padding: 35px 25px;
+            background: #fdfcf9;
+            border-radius: 25px;
+            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), 
+                       -9px -9px 16px rgba(255,255,255, 0.5),
+                       inset 0 0 0 1px rgba(0,0,0,0.05);
+            max-width: 600px;
+            text-align: justify;
             line-height: 1.8;
             font-size: 1.15rem;
-            margin-bottom: 50px;
-            hyphens: auto;
+            color: #333;
         }
 
-        h1 { 
-            text-align: left; 
-            font-size: 1.8rem; 
-            margin-bottom: 25px;
-            color: #000;
-        }
+        h1 { font-size: 1.8rem; margin-top: 0; color: #1a1a1a; }
 
-        /* Burbujas laterales con delineado */
-        .questions-nav {
+        /* Barra de Burbujas Flotante y Semi-transparente */
+        .bubbles-footer {
             position: fixed;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 15px;
+            border-radius: 50px;
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 10;
+            justify-content: space-around;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            z-index: 1000;
         }
 
         .q-bubble {
-            width: 48px;
-            height: 48px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: #fff;
-            color: #333;
+            background: rgba(255, 255, 255, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 3px solid #eee; /* Delineado base */
+            font-size: 0.85rem;
+            color: #555;
+            border: 3px solid #ddd;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            flex-shrink: 0;
         }
 
-        /* Colores de borde específicos por ID */
-        #bubble-0 { border-color: var(--c-113); }
-        #bubble-1 { border-color: var(--c-114); }
-        #bubble-2 { border-color: var(--c-115); }
-        #bubble-3 { border-color: var(--c-116); }
-        #bubble-4 { border-color: var(--c-117); }
-        #bubble-5 { border-color: var(--c-118); }
-        #bubble-6 { border-color: var(--c-119); }
+        /* Estados de burbuja: Relleno con delineado conservado */
+        .q-bubble.done { color: white !important; background-color: #27ae60 !important; }
+        .q-bubble.error { color: white !important; background-color: #c0392b !important; }
 
-        .q-bubble.active { transform: scale(1.1); box-shadow: 0 0 15px rgba(0,0,0,0.2); }
-        .q-bubble.done { background: #27ae60; color: white; border-color: #1e8449; }
-        .q-bubble.error { background: #c0392b; color: white; border-color: #922b21; }
+        /* Resaltados con brillo */
+        .hl { border-radius: 6px; transition: background 0.6s ease; }
+        .hl-active-113 { background: var(--c-113); box-shadow: 0 0 8px var(--c-113); }
+        .hl-active-114 { background: var(--c-114); box-shadow: 0 0 8px var(--c-114); }
+        .hl-active-115 { background: var(--c-115); box-shadow: 0 0 8px var(--c-115); }
+        .hl-active-116 { background: var(--c-116); box-shadow: 0 0 8px var(--c-116); }
+        .hl-active-117 { background: var(--c-117); box-shadow: 0 0 8px var(--c-117); }
+        .hl-active-118 { background: var(--c-118); box-shadow: 0 0 8px var(--c-118); }
+        .hl-active-119 { background: var(--c-119); box-shadow: 0 0 8px var(--c-119); }
 
-        /* Pop-up Moderno (Bottom Sheet) */
+        /* Bottom Sheet Moderno */
         .bottom-sheet {
             position: fixed;
             bottom: -100%;
             left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-top-left-radius: 30px;
-            border-top-right-radius: 30px;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
-            transition: bottom 0.5s cubic-bezier(0, 0.5, 0.5, 1);
-            z-index: 100;
+            background: white;
+            border-top-left-radius: 35px;
+            border-top-right-radius: 35px;
             padding: 30px 25px;
             box-sizing: border-box;
-            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 -15px 40px rgba(0,0,0,0.2);
+            transition: bottom 0.5s cubic-bezier(0, 0.6, 0.4, 1);
+            z-index: 2000;
         }
-
         .bottom-sheet.open { bottom: 0; }
 
-        .sheet-handle {
-            width: 40px;
-            height: 5px;
-            background: #ddd;
-            border-radius: 10px;
-            margin: -15px auto 20px;
-        }
-
         .option-btn {
-            width: 100%;
-            padding: 18px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 15px;
-            background: #f0f0f0;
-            text-align: left;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: 0.2s;
+            width: 100%; padding: 16px; margin: 10px 0;
+            border: 1px solid #eee; border-radius: 15px;
+            background: #f8f9fa; font-weight: 600; text-align: left;
         }
-
-        .option-btn:active { transform: scale(0.98); background: #e0e0e0; }
-
-        /* Resaltados */
-        .hl { border-radius: 4px; padding: 2px 0; }
-        .hl-113 { background: var(--c-113); }
-        .hl-114 { background: var(--c-114); }
-        .hl-115 { background: var(--c-115); }
-        .hl-116 { background: var(--c-116); }
-        .hl-117 { background: var(--c-117); }
-        .hl-118 { background: var(--c-118); }
-        .hl-119 { background: var(--c-119); }
 
         .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3);
-            display: none; z-index: 90;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.2); display: none; z-index: 1500;
         }
 
         #toast {
-            position: fixed;
-            top: 30px; left: 50%; transform: translateX(-50%);
-            padding: 12px 35px; border-radius: 50px; color: white;
-            font-weight: 800; z-index: 200; display: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: fixed; top: 40px; left: 50%; transform: translateX(-50%);
+            padding: 10px 35px; border-radius: 50px; color: white;
+            font-weight: 800; display: none; z-index: 3000;
         }
     </style>
 </head>
@@ -158,7 +130,7 @@
 <div id="toast"></div>
 <div class="overlay" id="overlay" onclick="closeSheet()"></div>
 
-<div class="content">
+<div class="text-3d-box">
     <h1>Anime and Manga</h1>
     <p>Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="text-113" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="text-114" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span></p>
     
@@ -169,7 +141,7 @@
     <p><span id="text-118" class="hl">International companies rewrite Manga stories from Japanese into other languages and sell them.</span> However, some fans do this before the companies in order to share the stories online for free. More people can read Manga now, but <span id="text-119" class="hl">some companies say that's a form of stealing.</span></p>
 </div>
 
-<nav class="questions-nav">
+<nav class="bubbles-footer">
     <div class="q-bubble" id="bubble-0" onclick="openSheet(0)">113</div>
     <div class="q-bubble" id="bubble-1" onclick="openSheet(1)">114</div>
     <div class="q-bubble" id="bubble-2" onclick="openSheet(2)">115</div>
@@ -180,7 +152,6 @@
 </nav>
 
 <div class="bottom-sheet" id="sheet">
-    <div class="sheet-handle"></div>
     <div id="sheet-content"></div>
 </div>
 
@@ -199,18 +170,16 @@
         const item = data[index];
         const content = document.getElementById('sheet-content');
         content.innerHTML = `
-            <p style="font-weight:800; font-size:1.2rem; margin-bottom:20px; line-height:1.4">${item.id}. ${item.q}</p>
+            <p style="font-weight:800; font-size:1.2rem; margin-bottom:20px;">${item.id}. ${item.q}</p>
             ${item.options.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}
         `;
         document.getElementById('sheet').classList.add('open');
         document.getElementById('overlay').style.display = 'block';
-        document.getElementById(`bubble-${index}`).classList.add('active');
     }
 
     function closeSheet() {
         document.getElementById('sheet').classList.remove('open');
         document.getElementById('overlay').style.display = 'none';
-        document.querySelectorAll('.q-bubble').forEach(b => b.classList.remove('active'));
     }
 
     function verify(choice, btn, index) {
@@ -221,13 +190,19 @@
         if (isCorrect) {
             btn.style.background = "#27ae60"; btn.style.color = "white";
             showToast("Melo", "#27ae60");
-            bubble.classList.add('done');
-            document.getElementById(`text-${item.id}`).classList.add(`hl-${item.id}`);
+            document.getElementById(`text-${item.id}`).classList.add(`hl-active-${item.id}`);
+            
+            setTimeout(() => {
+                bubble.classList.add('done');
+                bubble.style.borderColor = `var(--c-${item.id})`;
+                bubble.style.borderWidth = "4px";
+            }, 300);
             if(navigator.vibrate) navigator.vibrate(50);
         } else {
             btn.style.background = "#c0392b"; btn.style.color = "white";
             showToast("Nel, pilas", "#c0392b");
             bubble.classList.add('error');
+            bubble.style.borderColor = "#c0392b";
             if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
         }
         setTimeout(closeSheet, 1000);
