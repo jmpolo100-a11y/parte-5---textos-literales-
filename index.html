@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Inmersión Pro v6</title>
+    <title>Saber 11 - Elite Platform v8</title>
     <style>
         :root {
             --bg-page: #E0E5EC; --paper: #eeeeee;
@@ -17,14 +17,14 @@
 
         header { position: relative; display: flex; align-items: center; justify-content: center; padding: 10px 15px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); z-index: 1001; height: 60px; box-sizing: border-box; }
         .hamburger { position: absolute; left: 15px; font-size: 1.8rem; background: none; border: none; color: #333; cursor: pointer; padding: 5px; z-index: 1002; }
-        header h1 { font-size: 0.9rem; margin: 0; font-weight: 800; text-transform: uppercase; text-align: center; max-width: 50%; }
+        header h1 { font-size: 0.85rem; margin: 0; font-weight: 800; text-transform: uppercase; text-align: center; max-width: 50%; }
         .nav-group { position: absolute; right: 15px; display: flex; gap: 8px; }
         .nav-btn { background: #fff; border: 1px solid #ddd; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
 
         .side-menu { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 2005; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 30px 20px; box-shadow: 10px 0 30px rgba(0,0,0,0.2); box-sizing: border-box; }
         .side-menu.open { transform: translateX(280px); }
         .side-menu h2 { font-size: 1.2rem; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
-        .menu-item { padding: 15px; border-radius: 12px; margin: 10px 0; background: #f5f7f9; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
+        .menu-item { padding: 15px; border-radius: 12px; margin: 10px 0; background: #f5f7f9; font-weight: 600; cursor: pointer; border: 1px solid transparent; font-size: 0.85rem; }
         .menu-item.active { border-color: var(--c-hl3); background: #eef2f7; }
 
         .text-3d-box { margin: 15px; padding: 25px 20px; background: linear-gradient(145deg, #f0f0f0, #e6e6e6); border-radius: 20px; border: 1px solid #cccccc; box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); overflow-y: auto; scroll-behavior: smooth; text-align: justify; line-height: 1.35; font-size: 0.92rem; flex-grow: 1; margin-bottom: 110px; }
@@ -93,27 +93,59 @@
         },
         {
             titulo: "How planes were born",
-            cuerpo: `The history of planes started before 1800. In the 16th century, Mark Clerck was the first man to think of flying machines; he had dreams and made drawings of helicopters, but he did not actually build them.<br><br>
-            Many years later, <span id="hl-1" class="hl">the Irwins, two French brothers, made a balloon that flew for five miles in 1738.</span> In <span id="hl-0" class="hl">1848, John Hartman made a small plane that was able to make short flights.</span> Then, in January 1890, Samuel Secrest tried to fly a flying machine, but he couldn't because the <span id="hl-2" class="hl">weather was too bad... he stopped the project.</span><br><br>
-            In 1901, the Americans Orville and Wilbur Wright built a machine to fly, but <span id="hl-3" class="hl">it didn't work the first time. Finally... they started the air age.</span> On December 17, 1903, <span id="hl-5" class="hl">they flew the Kitty Hawk Flyer, which was in the air for 12 seconds.</span> The Wright Brothers made 1,000 short-distance flights... Thanks to the experience learned, the <span id="hl-4" class="hl">practice of air transport began in 1907.</span><br><br>
-            Then, in 1910, the first airplane company was created by Gabriel and Charles Oliveri, while the <span id="hl-6" class="hl">American Brett Graham</span> and the Englishman Mike Major started the first US airline in New York. Air transport is now one of the biggest businesses in the world.`,
+            cuerpo: `The history of planes started before 1800. In the 16th century, Mark Clerck was the first man to think of flying machines; he had dreams and made drawings of helicopters, but he did not actually build them.<br><br> Many years later, <span id="hl-1" class="hl">the Irwins, two French brothers, made a balloon that flew for five miles in 1738.</span> In <span id="hl-0" class="hl">1848, John Hartman made a small plane that was able to make short flights.</span> Then, in January 1890, Samuel Secrest tried to fly a flying machine, but he couldn't because the <span id="hl-2" class="hl">weather was too bad... he stopped the project.</span><br><br> In 1901, the Americans Orville and Wilbur Wright built a machine to fly, but <span id="hl-3" class="hl">it didn't work the first time. Finally... they started the air age.</span> On December 17, 1903, <span id="hl-5" class="hl">they flew the Kitty Hawk Flyer, which was in the air for 12 seconds.</span> The Wright Brothers made 1,000 short-distance flights... Thanks to the experience learned, the <span id="hl-4" class="hl">practice of air transport began in 1907.</span><br><br> Then, in 1910, the first airplane company was created by Gabriel and Charles Oliveri, while the <span id="hl-6" class="hl">American Brett Graham</span> and the Englishman Mike Major started the first US airline in New York. Air transport is now one of the biggest businesses in the world.`,
             preguntas: [
                 { id: 113, q: "When did the first plane fly?", opts: ["A. in 1890", "B. in 1738", "C. in 1848"], correct: "C" },
                 { id: 114, q: "Who made the first thing that could fly?", opts: ["A. John Hartman", "B. The Irwins", "C. Samuel Secrest"], correct: "B" },
-                { id: 115, q: "Why was Secrest's project finished?", opts: ["A. flights took little time", "B. flights were delayed", "C. flights failed"], correct: "C" },
+                { id: 115, q: "Why was Secrest's project finished?", opts: ["A. flights took little time", "B. flights were delayed", "C. weather was bad"], correct: "C" },
                 { id: 116, q: "Orville and Wilbur were important because they", opts: ["A. started the air age.", "B. worked together.", "C. knew the desert."], correct: "A" },
                 { id: 117, q: "Passengers have been able to travel by air since", opts: ["A. 1901.", "B. 1903.", "C. 1907."], correct: "C" },
                 { id: 118, q: "The Kitty Hawk Flyer flew", opts: ["A. at once.", "B. for a short time.", "C. many kilometers."], correct: "B" },
                 { id: 119, q: "Who was born in the United States?", opts: ["A. Brett", "B. Gabriel", "C. Mike"], correct: "A" }
             ]
+        },
+        {
+            titulo: "Paula Radcliffe's day",
+            cuerpo: `I'm an English runner who has won the world marathon six times. I also won four marathons in the USA and three in London. These are the activities I do when I'm not in a competition:<br><br>
+            8.30 am - <span id="hl-0" class="hl">My daughter Vicky comes to our room before we wake up and says good morning to Gary and me.</span> Later, I eat some melon and give cereal to her. Then, I have a look at the newspaper.<br><br>
+            9.45 am - We leave Vicky at her theatre class; then, I run and <span id="hl-1" class="hl">Gary cycles next to me to keep me close to my time goal.</span> I sometimes surf after this.<br><br>
+            12.30 pm - <span id="hl-2" class="hl">After meeting Vicky at school, we get home</span> and have a big lunch. Then, I play with her.<br><br>
+            2.10 pm - Gary usually takes Vicky out while <span id="hl-3" class="hl">I sleep.</span> When I get up, I boil some water for tea.<br><br>
+            7.30 pm - In the evening, Gary gives Vicky tea while I finish doing my exercises. Afterwards, <span id="hl-4" class="hl">I cook dinner</span> while Gary gives Vicky a bath.<br><br>
+            8.20 pm - Vicky goes to bed. I read my friends' messages on the computer, watch volleyball on TV, and <span id="hl-5" class="hl">have a conversation with Gary.</span><br><br>
+            10.30 pm - Time for bed. <span id="hl-6" class="hl">I brush my teeth and wash my hands and face.</span> I enjoy reading, but I haven't done it much since Vicky was born. I also wish I had time for playing the drums, but it would wake Vicky up.`,
+            preguntas: [
+                { id: 103, q: "In the morning, Vicky goes to her parents' room to", opts: ["A. have a snack.", "B. give them the paper.", "C. say hello to them."], correct: "C" },
+                { id: 104, q: "While Paula has her sports practice, Gary", opts: ["A. goes surfing.", "B. rides his bicycle.", "C. takes an acting class."], correct: "B" },
+                { id: 105, q: "Vicky arrives home at", opts: ["A. two o'clock.", "B. half past twelve.", "C. a quarter to ten."], correct: "B" },
+                { id: 106, q: "In the afternoon, Paula", opts: ["A. has some rest.", "B. goes out.", "C. puts Vicky to sleep."], correct: "A" },
+                { id: 107, q: "Who prepares the last meal of the day?", opts: ["A. Gary", "B. Vicky", "C. Paula."], correct: "C" },
+                { id: 108, q: "At night, Paula's husband", opts: ["A. follows a match.", "B. chats with Paula.", "C. checks his e-mails."], correct: "B" },
+                { id: 109, q: "Before going to sleep, Paula", opts: ["A. cleans herself.", "B. reads a lot.", "C. plays an instrument."], correct: "A" }
+            ]
+        },
+        {
+            titulo: "Evelyn Smith",
+            cuerpo: `Evelyn Smith was a pilot. Her father, David, had an important company in Kansas, USA, where she was born. They later <span id="hl-0" class="hl">moved to Texas with her Californian mother, and there Smith grew up</span> with her younger sister, Helen... Evelyn got interested in airplanes when she was 20. Her <span id="hl-1" class="hl">uncle Jim, who was a mechanic</span>, took her to a fair. They both got on an airplane and he flew it while <span id="hl-2" class="hl">she watched him.</span> That's when she knew she wanted to learn to fly!<br><br>
+            Evelyn later traveled to Toronto, Canada, where she <span id="hl-3" class="hl">helped sell medicines</span> for sick people. In 1919, she returned to the USA... Then, she moved to <span id="hl-4" class="hl">Sacramento, where she learned how to fly</span> along with her cousin...<br><br>
+            In 1922, Smith bought an airplane thanks to some <span id="hl-5" class="hl">money that one of her parents lent her.</span> Two years later, she moved to Pasadena... In May 1932, Evelyn flew from Hampton, USA, and after many hours she arrived in England... becoming the second woman to fly across the ocean.<br><br>
+            Based on the text, Evelyn's life was <span id="hl-6" class="hl">full of adventure.</span>`,
+            preguntas: [
+                { id: 106, q: "Where did Evelyn live when she was a teenager?", opts: ["A. in Kansas", "B. in California", "C. in Texas"], correct: "C" },
+                { id: 107, q: "Her first contact with planes happened thanks to", opts: ["A. David.", "B. Helen.", "C. Jim."], correct: "C" },
+                { id: 108, q: "The first time Evelyn got on a plane, she was the", opts: ["A. pilot.", "B. passenger.", "C. mechanic."], correct: "B" },
+                { id: 109, q: "What occupation did she have while being in a foreign country?", opts: ["A. pharmacist", "B. student", "C. musician"], correct: "A" },
+                { id: 110, q: "Where was she taught to fly a plane?", opts: ["A. in Philadelphia", "B. in Toronto", "C. in Sacramento"], correct: "C" },
+                { id: 111, q: "To get her plane, she borrowed cash from", opts: ["A. her father.", "B. her friend.", "C. her cousin."], correct: "A" },
+                { id: 112, q: "Based on the text, Evelyn's life was full of", opts: ["A. adventure.", "B. accidents.", "C. art."], correct: "A" }
+            ]
         }
     ];
 
     let currentIdx = 0;
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-    // MOTOR DE AUDIO REFORZADO
     const AudioEngine = (() => {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const play = (freq, type, decay, vol) => {
             const osc = ctx.createOscillator(); const gain = ctx.createGain();
             osc.type = type; osc.frequency.setValueAtTime(freq, ctx.currentTime);
@@ -123,15 +155,9 @@
             osc.start(); osc.stop(ctx.currentTime + decay);
         };
         return {
-            click: () => play(600, 'sine', 0.1, 0.4), // Clic más fuerte
-            correct: () => { 
-                play(500, 'sine', 0.2, 0.6); 
-                setTimeout(() => play(800, 'sine', 0.4, 0.6), 100); 
-            },
-            incorrect: () => { 
-                play(250, 'triangle', 0.4, 0.7); // Tono grave más fuerte y largo
-                setTimeout(() => play(180, 'triangle', 0.4, 0.7), 150); 
-            }
+            click: () => play(600, 'sine', 0.1, 0.4),
+            correct: () => { play(500, 'sine', 0.2, 0.6); setTimeout(() => play(800, 'sine', 0.4, 0.6), 100); },
+            incorrect: () => { play(250, 'triangle', 0.4, 0.7); setTimeout(() => play(180, 'triangle', 0.4, 0.7), 150); }
         };
     })();
 
@@ -164,17 +190,14 @@
         const isCorrect = choice === p.correct;
         const bubble = document.getElementById(`bubble-${qIdx}`);
         const hlElem = document.getElementById(`hl-${qIdx}`);
-
         if (isCorrect) {
             btn.classList.add('btn-correct'); showToast("Melo", "#27ae60");
             bubble.classList.add('done'); bubble.style.borderColor = `var(--c-hl${qIdx+1})`;
-            AudioEngine.correct(); 
-            if (navigator.vibrate) navigator.vibrate(60); // Vibración más larga
+            AudioEngine.correct(); if (navigator.vibrate) navigator.vibrate(60);
         } else {
             btn.classList.add('btn-incorrect'); showToast("Nel, pilas", "#c0392b");
-            bubble.classList.add('error'); 
-            AudioEngine.incorrect(); 
-            if (navigator.vibrate) navigator.vibrate([150, 80, 150]); // Vibración doble fuerte
+            bubble.classList.add('error'); AudioEngine.incorrect();
+            if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
         }
         if(hlElem) {
             hlElem.classList.add(`hl-active-${qIdx}`);
@@ -190,8 +213,6 @@
 
     function changeText(dir) { let newIdx = currentIdx + dir; if(newIdx >= 0 && newIdx < biblioteca.length) loadText(newIdx); }
     function loadText(id) { currentIdx = id; renderApp(); closeAll(); }
-    
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
     renderApp();
 </script>
 </body>
