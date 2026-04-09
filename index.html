@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Elite UX</title>
+    <title>Saber 11 - Pro Platform</title>
     <style>
         :root {
             --bg-page: #E0E5EC;
-            --paper-grad: linear-gradient(145deg, #eeeeee, #e2e2e2);
+            --paper: #eeeeee;
+            --c-correct: #27ae60;
+            --c-error: #c0392b;
+            /* Colores de resaltado */
             --c-113: #FFD700; --c-114: #4CAF50; --c-115: #2196F3;
             --c-116: #FF9800; --c-117: #9C27B0; --c-118: #E91E63;
             --c-119: #00BCD4;
@@ -19,29 +22,81 @@
             font-family: -apple-system, system-ui, sans-serif;
             display: flex;
             flex-direction: column;
-            align-items: center;
             height: 100vh;
-            overflow: hidden; /* Evitamos scroll en el body, lo hará el cuadro */
+            overflow: hidden;
         }
 
-        /* Recuadro 3D con Scroll Interno y Texto Compacto */
+        /* Encabezado con Navegación */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+        }
+
+        .nav-btn {
+            background: #fff;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .hamburger {
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        header h1 {
+            font-size: 1.1rem;
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        /* Menú Lateral (Hamburguesa) */
+        .side-menu {
+            position: fixed;
+            left: -280px;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: #fff;
+            z-index: 2005;
+            transition: 0.3s;
+            padding: 20px;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+        }
+        .side-menu.open { left: 0; }
+        .side-menu h2 { font-size: 1.2rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .menu-item { padding: 12px; border-radius: 8px; margin: 5px 0; cursor: pointer; background: #f8f9fa; }
+
+        /* Recuadro de Texto 3D con Borde Gris */
         .text-3d-box {
             margin: 20px 15px 120px 15px;
             padding: 25px 20px;
-            background: var(--paper-grad);
+            background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
             border-radius: 20px;
+            border: 1px solid #cccccc; /* Delineado gris delgado */
             box-shadow: 10px 10px 20px rgba(163,177,198,0.5), -10px -10px 20px rgba(255,255,255, 0.6);
-            max-width: 550px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
             text-align: justify;
-            line-height: 1.35; /* Interlineado compactado solicitado */
+            line-height: 1.35;
             font-size: 0.92rem;
-            color: #333;
-            overflow-y: auto; /* Scroll interno para el auto-scroll */
-            scroll-behavior: smooth; /* Movimiento fluido */
-            -webkit-overflow-scrolling: touch;
         }
-
-        h1 { font-size: 1.3rem; text-align: center; margin-bottom: 15px; color: #000; }
 
         /* Burbujas Flotantes */
         .bubbles-footer {
@@ -63,23 +118,18 @@
 
         .q-bubble {
             width: 38px; height: 38px; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 0.75rem; color: #444;
-            border: 2px solid #ddd; transition: 0.3s;
+            background: #fff; display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 0.75rem; color: #444; border: 2px solid #ddd;
         }
 
-        .q-bubble.done { color: white !important; background-color: #27ae60 !important; }
-        .q-bubble.error { color: white !important; background-color: #c0392b !important; }
+        .q-bubble.done { color: white !important; background-color: var(--c-correct) !important; }
+        .q-bubble.error { color: white !important; background-color: var(--c-error) !important; }
 
         /* Resaltados */
-        .hl { border-radius: 4px; transition: background 0.6s ease; display: inline; }
-        .hl-active-113 { background: var(--c-113); }
-        .hl-active-114 { background: var(--c-114); }
-        .hl-active-115 { background: var(--c-115); }
-        .hl-active-116 { background: var(--c-116); }
-        .hl-active-117 { background: var(--c-117); }
-        .hl-active-118 { background: var(--c-118); }
+        .hl { border-radius: 4px; transition: 0.6s ease; }
+        .hl-active-113 { background: var(--c-113); } .hl-active-114 { background: var(--c-114); }
+        .hl-active-115 { background: var(--c-115); } .hl-active-116 { background: var(--c-116); }
+        .hl-active-117 { background: var(--c-117); } .hl-active-118 { background: var(--c-118); }
         .hl-active-119 { background: var(--c-119); }
 
         /* Pop-up */
@@ -87,31 +137,41 @@
             position: fixed; bottom: -100%; left: 0; width: 100%;
             background: white; border-top-left-radius: 30px; border-top-right-radius: 30px;
             padding: 25px; box-sizing: border-box; z-index: 2000;
-            transition: bottom 0.4s cubic-bezier(0, 0.6, 0.4, 1);
+            transition: 0.4s cubic-bezier(0, 0.6, 0.4, 1);
         }
         .bottom-sheet.open { bottom: 0; }
 
         .option-btn {
-            width: 100%; padding: 14px; margin: 6px 0;
-            border: 1px solid #eee; border-radius: 12px;
-            background: #f8f9fa; font-weight: 600; text-align: left;
-            color: #000; font-size: 0.9rem;
+            width: 100%; padding: 14px; margin: 6px 0; border: 1px solid #eee; border-radius: 12px;
+            background: #f8f9fa; font-weight: 600; text-align: left; color: #000; font-size: 0.9rem;
         }
 
-        .btn-correct { background-color: #27ae60 !important; color: white !important; }
-        .btn-incorrect { background-color: #c0392b !important; color: white !important; }
+        .btn-correct { background-color: var(--c-correct) !important; color: white !important; }
+        .btn-incorrect { background-color: var(--c-error) !important; color: white !important; }
 
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); display: none; z-index: 1500; }
-        #toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); padding: 8px 25px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 3000; }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: none; z-index: 1500; }
+        #toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); padding: 8px 25px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 3000; }
     </style>
 </head>
 <body>
 
 <div id="toast"></div>
-<div class="overlay" id="overlay" onclick="closeSheet()"></div>
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
 
-<div class="text-3d-box" id="main-scroll-box">
-    <h1>Anime and Manga</h1>
+<div class="side-menu" id="side-menu">
+    <h2>Textos Disponibles</h2>
+    <div class="menu-item" onclick="loadText(1)">1. Anime and Manga</div>
+    <div class="menu-item" style="opacity: 0.5;">2. Próximamente...</div>
+</div>
+
+<header>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+    <button class="nav-btn" onclick="prevText()">‹</button>
+    <h1 id="header-title">ANIME AND MANGA</h1>
+    <button class="nav-btn" onclick="nextText()">›</button>
+</header>
+
+<div class="text-3d-box" id="scroll-box">
     <p>Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="text-113" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="text-114" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span></p>
     
     <p>Most Anime movies come from Manga or comics, which means written and drawn stories. During the 1970s, many Anime movies were made from <span id="text-115" class="hl">Manga written by Osamu Tezuka, an artist well-known for his writings about the future, wonderful machines and amazing adventures.</span></p>
@@ -155,44 +215,35 @@
     })();
 
     const data = [
-        { id: 113, correct: "C" }, { id: 114, correct: "A" }, { id: 115, correct: "B" },
-        { id: 116, correct: "B" }, { id: 117, correct: "C" }, { id: 118, correct: "B" },
-        { id: 119, correct: "A" }
+        { id: 113, correct: "C", q: "113. Making movies in Japan was difficult because most of the time", opts: ["A. actors were foreign.", "B. places were miles away.", "C. money was not available."] },
+        { id: 114, correct: "A", q: "114. When making a cartoon, artists drew people who", opts: ["A. looked very different.", "B. acted very well.", "C. lived in usual places."] },
+        { id: 115, correct: "B", q: "115. What made Osamu Tezuka an important writer?", opts: ["A. his famous movies", "B. his various stories", "C. his advanced instruments"] },
+        { id: 116, correct: "B", q: "116. In Japan, the term Anime includes", opts: ["A. just Japanese cartoons.", "B. all types of video cartoons.", "C. only Western cartoons."] },
+        { id: 117, correct: "C", q: "117. Western countries believe all Manga is made", opts: ["A. with the latest software.", "B. by several artists.", "C. in Japan."] },
+        { id: 118, correct: "B", q: "118. Manga stories found in another language are sold", opts: ["A. on the internet.", "B. by special companies.", "C. to Japanese people."] },
+        { id: 119, correct: "A", q: "119. Companies think free online Manga should be", opts: ["A. considered as stolen.", "B. shared online.", "C. downloaded."] }
     ];
 
-    const questionsHTML = [
-        `113. Making movies in Japan was difficult because most of the time<br><br>A. actors were foreign.<br>B. places were miles away.<br>C. money was not available.`,
-        `114. When making a cartoon, artists drew people who<br><br>A. looked very different.<br>B. acted very well.<br>C. lived in usual places.`,
-        `115. What made Osamu Tezuka an important writer?<br><br>A. his famous movies<br>B. his various stories<br>C. his advanced instruments`,
-        `116. In Japan, the term Anime includes<br><br>A. just Japanese cartoons.<br>B. all types of video cartoons.<br>C. only Western cartoons.`,
-        `117. Western countries believe all Manga is made<br><br>A. with the latest software.<br>B. by several artists.<br>C. in Japan.`,
-        `118. Manga stories found in another language are sold<br><br>A. on the internet.<br>B. by special companies.<br>C. to Japanese people.`,
-        `119. Companies think free online Manga should be<br><br>A. considered as stolen.<br>B. shared online.<br>C. downloaded.`
-    ];
+    function toggleMenu() { document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').style.display = 'block'; }
+    function closeAll() { document.getElementById('side-menu').classList.remove('open'); document.getElementById('sheet').classList.remove('open'); document.getElementById('overlay').style.display = 'none'; }
 
     function openSheet(index) {
         AudioEngine.click();
         if (navigator.vibrate) navigator.vibrate(10);
+        const item = data[index];
         const content = document.getElementById('sheet-content');
-        const [qText, optsRaw] = questionsHTML[index].split('<br><br>');
-        const options = optsRaw.split('<br>');
-        content.innerHTML = `<p style="font-weight:800; margin-bottom:12px; color:#000;">${qText}</p>
-            ${options.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`;
+        content.innerHTML = `<p style="font-weight:800; margin-bottom:12px; color:#000;">${item.q}</p>
+            ${item.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`;
         document.getElementById('sheet').classList.add('open');
         document.getElementById('overlay').style.display = 'block';
-    }
-
-    function closeSheet() {
-        document.getElementById('sheet').classList.remove('open');
-        document.getElementById('overlay').style.display = 'none';
     }
 
     function verify(choice, btn, index) {
         const item = data[index];
         const isCorrect = choice === item.correct;
         const bubble = document.getElementById(`bubble-${index}`);
-        const highlightElement = document.getElementById(`text-${item.id}`);
-        const scrollBox = document.getElementById('main-scroll-box');
+        const hlElem = document.getElementById(`text-${item.id}`);
+        const scrollBox = document.getElementById('scroll-box');
 
         if (isCorrect) {
             btn.classList.add('btn-correct'); showToast("Melo", "#27ae60");
@@ -203,24 +254,20 @@
             bubble.classList.add('error'); AudioEngine.incorrect();
             if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
         }
-
-        // Siempre resaltar
-        highlightElement.classList.add(`hl-active-${item.id}`);
-
-        // UX: Auto-Scroll hacia el elemento resaltado
-        setTimeout(() => {
-            const topPos = highlightElement.offsetTop;
-            scrollBox.scrollTo({ top: topPos - 60, behavior: 'smooth' });
-        }, 400);
-
-        setTimeout(closeSheet, 1200);
+        hlElem.classList.add(`hl-active-${item.id}`);
+        setTimeout(() => { scrollBox.scrollTo({ top: hlElem.offsetTop - 40, behavior: 'smooth' }); }, 400);
+        setTimeout(closeAll, 1200);
     }
 
     function showToast(txt, color) {
-        const t = document.getElementById('toast');
-        t.innerText = txt; t.style.background = color; t.style.display = 'block';
+        const t = document.getElementById('toast'); t.innerText = txt; t.style.background = color; t.style.display = 'block';
         setTimeout(() => t.style.display = 'none', 1400);
     }
+
+    // Funciones de navegación (Placeholders para más textos)
+    function prevText() { showToast("Cargando anterior...", "#333"); }
+    function nextText() { showToast("Cargando siguiente...", "#333"); }
+    function loadText(id) { closeAll(); showToast("Texto cargado", "#333"); }
 </script>
 
 </body>
