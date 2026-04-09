@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - 3D Elite v4</title>
+    <title>Saber 11 - Inmersión Total</title>
     <style>
         :root {
-            --bg: #E0E5EC;
+            --bg-page: #E0E5EC;
+            /* Degradado Gris Suave para el fondo del texto */
+            --paper-grad: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+            --text-color: #333;
+            /* Colores de resaltado */
             --c-113: #FFD700; --c-114: #4CAF50; --c-115: #2196F3;
             --c-116: #FF9800; --c-117: #9C27B0; --c-118: #E91E63;
             --c-119: #00BCD4;
@@ -14,35 +18,39 @@
 
         body {
             margin: 0;
-            background-color: var(--bg);
+            background-color: var(--bg-page);
             font-family: -apple-system, system-ui, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Recuadro de Texto 3D */
+        /* Recuadro de Texto 3D con Fondo Gris Degradado */
         .text-3d-box {
             margin: 30px 15px 150px 15px;
             padding: 30px 20px;
-            background: #fdfcf9;
+            background: #e6e6e6; /* Base para el degradado */
+            background: var(--paper-grad);
             border-radius: 20px;
             box-shadow: 10px 10px 20px rgba(163,177,198,0.5), 
-                       -10px -10px 20px rgba(255,255,255, 0.6);
+                       -10px -10px 20px rgba(255,255,255, 0.6),
+                       inset 0 0 1px rgba(0,0,0,0.1);
             max-width: 550px;
             text-align: justify;
             line-height: 1.6;
-            font-size: 1rem; /* Tamaño de letra más pequeño */
-            color: #333;
+            font-size: 0.95rem;
+            color: var(--text-color);
         }
 
         h1 { 
             font-size: 1.5rem; 
-            text-align: center; /* Título centrado */
+            text-align: center; 
             margin-top: 0; 
             color: #000;
             margin-bottom: 25px;
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
         }
 
         /* Barra de Burbujas Flotante */
@@ -53,7 +61,7 @@
             transform: translateX(-50%);
             width: 92%;
             max-width: 480px;
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             padding: 12px;
@@ -61,7 +69,7 @@
             display: flex;
             justify-content: space-around;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.2);
             z-index: 1000;
         }
 
@@ -69,7 +77,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -83,7 +91,7 @@
         .q-bubble.done { color: white !important; background-color: #27ae60 !important; }
         .q-bubble.error { color: white !important; background-color: #c0392b !important; }
 
-        /* Resaltados */
+        /* Resaltados (ahora se activan SIEMPRE) */
         .hl { border-radius: 4px; transition: background 0.6s ease; }
         .hl-active-113 { background: var(--c-113); }
         .hl-active-114 { background: var(--c-114); }
@@ -114,10 +122,12 @@
             width: 100%; padding: 15px; margin: 8px 0;
             border: 1px solid #eee; border-radius: 12px;
             background: #f8f9fa; font-weight: 600; text-align: left;
-            color: #000; /* Texto en negro solicitado */
+            color: #000;
             font-size: 0.95rem;
-            transition: 0.2s;
+            transition: transform 0.1s;
         }
+
+        .option-btn:active { transform: scale(0.97); }
 
         /* Feedback de Relleno */
         .btn-correct { background-color: #27ae60 !important; color: white !important; border: none; }
@@ -167,22 +177,69 @@
 </div>
 
 <script>
+    // MOTOR DE SONIDO (Genera audio sintético sin archivos)
+    const AudioEngine = (() => {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        const play = (freq, type, decay, vol) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            gain.gain.setValueAtTime(vol, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + decay);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + decay);
+        };
+
+        return {
+            click: () => play(600, 'sine', 0.1, 0.3),
+            correct: () => {
+                play(500, 'sine', 0.2, 0.4);
+                setTimeout(() => play(800, 'sine', 0.4, 0.4), 100);
+            },
+            incorrect: () => {
+                play(200, 'triangle', 0.3, 0.5);
+                setTimeout(() => play(150, 'triangle', 0.3, 0.5), 150);
+            }
+        };
+    })();
+
+    // MOTOR DE VIBRACIÓN
+    const vibrate = (pattern) => {
+        if (navigator.vibrate) navigator.vibrate(pattern);
+    };
+
     const data = [
-        { id: 113, q: "Making movies in Japan was difficult because most of the time", options: ["A. actors were foreign.", "B. places were miles away.", "C. money was not available."], correct: "C" },
-        { id: 114, q: "When making a cartoon, artists drew people who", options: ["A. looked very different.", "B. acted very well.", "C. lived in usual places."], correct: "A" },
-        { id: 115, q: "What made Osamu Tezuka an important writer?", options: ["A. his famous movies", "B. his various stories", "C. his advanced instruments"], correct: "B" },
-        { id: 116, q: "In Japan, the term Anime includes", options: ["A. just Japanese cartoons.", "B. all types of video cartoons.", "C. only Western cartoons."], correct: "B" },
-        { id: 117, q: "Western countries believe all Manga is made", options: ["A. with the latest software.", "B. by several artists.", "C. in Japan."], correct: "C" },
-        { id: 118, q: "Manga stories found in another language are sold", options: ["A. on the internet.", "B. by special companies.", "C. to Japanese people."], correct: "B" },
-        { id: 119, q: "Companies think free online Manga should be", options: ["A. considered as stolen.", "B. shared online.", "C. downloaded."], correct: "A" }
+        { id: 113, correct: "C" }, { id: 114, correct: "A" }, { id: 115, correct: "B" },
+        { id: 116, correct: "B" }, { id: 117, correct: "C" }, { id: 118, correct: "B" },
+        { id: 119, correct: "A" }
+    ];
+
+    const questionsHTML = [
+        `113. Making movies in Japan was difficult because most of the time<br><br>A. actors were foreign.<br>B. places were miles away.<br>C. money was not available.`,
+        `114. When making a cartoon, artists drew people who<br><br>A. looked very different.<br>B. acted very well.<br>C. lived in usual places.`,
+        `115. What made Osamu Tezuka an important writer?<br><br>A. his famous movies<br>B. his various stories<br>C. his advanced instruments`,
+        `116. In Japan, the term Anime includes<br><br>A. just Japanese cartoons.<br>B. all types of video cartoons.<br>C. only Western cartoons.`,
+        `117. Western countries believe all Manga is made<br><br>A. with the latest software.<br>B. by several artists.<br>C. in Japan.`,
+        `118. Manga stories found in another language are sold<br><br>A. on the internet.<br>B. by special companies.<br>C. to Japanese people.`,
+        `119. Companies think free online Manga should be<br><br>A. considered as stolen.<br>B. shared online.<br>C. downloaded.`
     ];
 
     function openSheet(index) {
+        AudioEngine.click();
+        vibrate(10); // Feedback táctil suave al tocar burbuja
+        
         const item = data[index];
         const content = document.getElementById('sheet-content');
+        const qText = questionsHTML[index].split('<br><br>')[0];
+        const options = questionsHTML[index].split('<br><br>')[1].split('<br>');
+
         content.innerHTML = `
-            <p style="font-weight:800; font-size:1.1rem; margin-bottom:15px; color:#000;">${item.id}. ${item.q}</p>
-            ${item.options.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}
+            <p style="font-weight:800; font-size:1.1rem; margin-bottom:15px; color:#000; line-height:1.4">${qText}</p>
+            ${options.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}
         `;
         document.getElementById('sheet').classList.add('open');
         document.getElementById('overlay').style.display = 'block';
@@ -198,31 +255,43 @@
         const isCorrect = choice === item.correct;
         const bubble = document.getElementById(`bubble-${index}`);
 
+        // Bloquear interacciones
+        const buttons = document.querySelectorAll('.option-btn');
+        buttons.forEach(b => b.style.pointerEvents = 'none');
+
         if (isCorrect) {
+            // UI Melo
             btn.classList.add('btn-correct');
             showToast("Melo", "#27ae60");
-            document.getElementById(`text-${item.id}`).classList.add(`hl-active-${item.id}`);
-            
-            setTimeout(() => {
-                bubble.classList.add('done');
-                bubble.style.borderColor = `var(--c-${item.id})`;
-                bubble.style.borderWidth = "3px";
-            }, 300);
-            if(navigator.vibrate) navigator.vibrate(50);
+            bubble.classList.add('done');
+            bubble.style.borderColor = `var(--c-${item.id})`;
+            bubble.style.borderWidth = "3px";
+
+            // Inmersión Correcta
+            AudioEngine.correct();
+            vibrate(50); // Vibración corta y firme
         } else {
+            // UI Nel
             btn.classList.add('btn-incorrect');
             showToast("Nel, pilas", "#c0392b");
             bubble.classList.add('error');
             bubble.style.borderColor = "#c0392b";
-            if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
+            // Inmersión Incorrecta
+            AudioEngine.incorrect();
+            vibrate([100, 50, 100]); // Vibración doble de error
         }
-        setTimeout(closeSheet, 1000);
+
+        // --- CAMBIO CLAVE: Resaltar SIEMPRE ---
+        document.getElementById(`text-${item.id}`).classList.add(`hl-active-${item.id}`);
+
+        setTimeout(closeSheet, 1200);
     }
 
     function showToast(txt, color) {
         const t = document.getElementById('toast');
         t.innerText = txt; t.style.background = color; t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 1200);
+        setTimeout(() => t.style.display = 'none', 1400);
     }
 </script>
 
