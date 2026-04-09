@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Pro Platform</title>
+    <title>Saber 11 - Pro UX</title>
     <style>
         :root {
             --bg-page: #E0E5EC;
             --paper: #eeeeee;
             --c-correct: #27ae60;
             --c-error: #c0392b;
-            /* Colores de resaltado */
             --c-113: #FFD700; --c-114: #4CAF50; --c-115: #2196F3;
             --c-116: #FF9800; --c-117: #9C27B0; --c-118: #E91E63;
             --c-119: #00BCD4;
@@ -26,47 +25,70 @@
             overflow: hidden;
         }
 
-        /* Encabezado con Navegación */
+        /* --- HEADER CORREGIDO: Título Centrado --- */
         header {
-            display: flex;
+            display: grid;
+            grid-template-columns: 50px 1fr 100px; /* Columnas fijas para balancear */
             align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
+            padding: 10px 15px;
             background: rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
             z-index: 1001;
+            height: 60px;
+        }
+
+        .header-left {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .header-center {
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .header-right {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        header h1 {
+            font-size: 1rem;
+            margin: 0;
+            text-align: center;
+            font-weight: 800;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-transform: uppercase;
         }
 
         .nav-btn {
             background: #fff;
-            border: none;
+            border: 1px solid #ddd;
             width: 35px;
             height: 35px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .hamburger {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             cursor: pointer;
             background: none;
             border: none;
+            padding: 0;
+            color: #333;
         }
 
-        header h1 {
-            font-size: 1.1rem;
-            margin: 0;
-            flex-grow: 1;
-            text-align: center;
-            font-weight: 800;
-        }
-
-        /* Menú Lateral (Hamburguesa) */
+        /* Menú Lateral */
         .side-menu {
             position: fixed;
             left: -280px;
@@ -75,27 +97,28 @@
             height: 100%;
             background: #fff;
             z-index: 2005;
-            transition: 0.3s;
-            padding: 20px;
-            box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 25px;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.2);
         }
         .side-menu.open { left: 0; }
-        .side-menu h2 { font-size: 1.2rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .menu-item { padding: 12px; border-radius: 8px; margin: 5px 0; cursor: pointer; background: #f8f9fa; }
+        .side-menu h2 { font-size: 1.2rem; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+        .menu-item { padding: 14px; border-radius: 10px; margin: 8px 0; cursor: pointer; background: #f0f2f5; font-weight: 600; }
 
-        /* Recuadro de Texto 3D con Borde Gris */
+        /* Recuadro de Texto 3D con Borde */
         .text-3d-box {
-            margin: 20px 15px 120px 15px;
+            margin: 15px 15px 120px 15px;
             padding: 25px 20px;
             background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
             border-radius: 20px;
-            border: 1px solid #cccccc; /* Delineado gris delgado */
-            box-shadow: 10px 10px 20px rgba(163,177,198,0.5), -10px -10px 20px rgba(255,255,255, 0.6);
+            border: 1px solid #cccccc;
+            box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5);
             overflow-y: auto;
             scroll-behavior: smooth;
             text-align: justify;
             line-height: 1.35;
             font-size: 0.92rem;
+            flex-grow: 1;
         }
 
         /* Burbujas Flotantes */
@@ -105,7 +128,7 @@
             left: 50%;
             transform: translateX(-50%);
             width: 94%;
-            max-width: 480px;
+            max-width: 450px;
             background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px);
             padding: 10px;
@@ -114,12 +137,14 @@
             justify-content: space-around;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .q-bubble {
             width: 38px; height: 38px; border-radius: 50%;
             background: #fff; display: flex; align-items: center; justify-content: center;
             font-weight: 800; font-size: 0.75rem; color: #444; border: 2px solid #ddd;
+            transition: 0.3s;
         }
 
         .q-bubble.done { color: white !important; background-color: var(--c-correct) !important; }
@@ -132,25 +157,26 @@
         .hl-active-117 { background: var(--c-117); } .hl-active-118 { background: var(--c-118); }
         .hl-active-119 { background: var(--c-119); }
 
-        /* Pop-up */
+        /* Bottom Sheet */
         .bottom-sheet {
             position: fixed; bottom: -100%; left: 0; width: 100%;
             background: white; border-top-left-radius: 30px; border-top-right-radius: 30px;
             padding: 25px; box-sizing: border-box; z-index: 2000;
             transition: 0.4s cubic-bezier(0, 0.6, 0.4, 1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
         }
         .bottom-sheet.open { bottom: 0; }
 
         .option-btn {
-            width: 100%; padding: 14px; margin: 6px 0; border: 1px solid #eee; border-radius: 12px;
-            background: #f8f9fa; font-weight: 600; text-align: left; color: #000; font-size: 0.9rem;
+            width: 100%; padding: 15px; margin: 8px 0; border: 1px solid #eee; border-radius: 12px;
+            background: #f8f9fa; font-weight: 600; text-align: left; color: #000; font-size: 0.95rem;
         }
 
         .btn-correct { background-color: var(--c-correct) !important; color: white !important; }
         .btn-incorrect { background-color: var(--c-error) !important; color: white !important; }
 
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: none; z-index: 1500; }
-        #toast { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); padding: 8px 25px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 3000; }
+        #toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); padding: 10px 30px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 3000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
@@ -159,16 +185,22 @@
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
 <div class="side-menu" id="side-menu">
-    <h2>Textos Disponibles</h2>
+    <h2>Biblioteca</h2>
     <div class="menu-item" onclick="loadText(1)">1. Anime and Manga</div>
-    <div class="menu-item" style="opacity: 0.5;">2. Próximamente...</div>
+    <div class="menu-item" style="opacity: 0.4;">Próximamente...</div>
 </div>
 
 <header>
-    <button class="hamburger" onclick="toggleMenu()">☰</button>
-    <button class="nav-btn" onclick="prevText()">‹</button>
-    <h1 id="header-title">ANIME AND MANGA</h1>
-    <button class="nav-btn" onclick="nextText()">›</button>
+    <div class="header-left">
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <div class="header-center">
+        <h1 id="header-title">Anime and Manga</h1>
+    </div>
+    <div class="header-right">
+        <button class="nav-btn" onclick="prevText()">‹</button>
+        <button class="nav-btn" onclick="nextText()">›</button>
+    </div>
 </header>
 
 <div class="text-3d-box" id="scroll-box">
@@ -196,7 +228,7 @@
 </div>
 
 <script>
-    // AUDIO ENGINE
+    // Audio y Vibración (Motor previo mantenido)
     const AudioEngine = (() => {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const play = (freq, type, decay, vol) => {
@@ -232,7 +264,7 @@
         if (navigator.vibrate) navigator.vibrate(10);
         const item = data[index];
         const content = document.getElementById('sheet-content');
-        content.innerHTML = `<p style="font-weight:800; margin-bottom:12px; color:#000;">${item.q}</p>
+        content.innerHTML = `<p style="font-weight:800; margin-bottom:15px; color:#000;">${item.q}</p>
             ${item.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`;
         document.getElementById('sheet').classList.add('open');
         document.getElementById('overlay').style.display = 'block';
@@ -264,10 +296,9 @@
         setTimeout(() => t.style.display = 'none', 1400);
     }
 
-    // Funciones de navegación (Placeholders para más textos)
-    function prevText() { showToast("Cargando anterior...", "#333"); }
-    function nextText() { showToast("Cargando siguiente...", "#333"); }
-    function loadText(id) { closeAll(); showToast("Texto cargado", "#333"); }
+    function prevText() { showToast("No hay textos anteriores", "#333"); }
+    function nextText() { showToast("No hay más textos", "#333"); }
+    function loadText(id) { closeAll(); }
 </script>
 
 </body>
