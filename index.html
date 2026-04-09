@@ -3,180 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Pro UX</title>
+    <title>Saber 11 - Sistema Elite</title>
     <style>
         :root {
-            --bg-page: #E0E5EC;
-            --paper: #eeeeee;
-            --c-correct: #27ae60;
-            --c-error: #c0392b;
-            --c-113: #FFD700; --c-114: #4CAF50; --c-115: #2196F3;
-            --c-116: #FF9800; --c-117: #9C27B0; --c-118: #E91E63;
-            --c-119: #00BCD4;
+            --bg-page: #E0E5EC; --paper: #eeeeee;
+            --c-correct: #27ae60; --c-error: #c0392b;
+            --c-hl1: #FFD700; --c-hl2: #4CAF50; --c-hl3: #2196F3;
+            --c-hl4: #FF9800; --c-hl5: #9C27B0; --c-hl6: #E91E63;
+            --c-hl7: #00BCD4;
         }
 
-        body {
-            margin: 0;
-            background-color: var(--bg-page);
-            font-family: -apple-system, system-ui, sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
+        body { margin: 0; background-color: var(--bg-page); font-family: -apple-system, system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-        /* --- HEADER CORREGIDO: Título Centrado --- */
-        header {
-            display: grid;
-            grid-template-columns: 50px 1fr 100px; /* Columnas fijas para balancear */
-            align-items: center;
-            padding: 10px 15px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            z-index: 1001;
-            height: 60px;
-        }
+        /* --- HEADER --- */
+        header { position: relative; display: flex; align-items: center; justify-content: center; padding: 10px 15px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); z-index: 1001; height: 60px; box-sizing: border-box; }
+        .hamburger { position: absolute; left: 15px; font-size: 1.8rem; background: none; border: none; color: #333; cursor: pointer; padding: 5px; z-index: 1002; }
+        header h1 { font-size: 0.9rem; margin: 0; font-weight: 800; text-transform: uppercase; text-align: center; max-width: 50%; }
+        .nav-group { position: absolute; right: 15px; display: flex; gap: 8px; }
+        .nav-btn { background: #fff; border: 1px solid #ddd; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
 
-        .header-left {
-            display: flex;
-            justify-content: flex-start;
+        /* --- MENÚ LATERAL (CORREGIDO) --- */
+        .side-menu { 
+            position: fixed; 
+            left: -280px; /* Escondido totalmente a la izquierda */
+            top: 0; 
+            width: 280px; 
+            height: 100%; 
+            background: #ffffff; 
+            z-index: 2005; 
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            padding: 30px 20px; 
+            box-shadow: 10px 0 30px rgba(0,0,0,0.2); 
+            box-sizing: border-box; 
         }
+        /* Cuando tiene la clase open, se desplaza hacia la derecha */
+        .side-menu.open { transform: translateX(280px); }
 
-        .header-center {
-            display: flex;
-            justify-content: center;
-            overflow: hidden;
-        }
+        .side-menu h2 { font-size: 1.2rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-bottom: 20px; color: #000; }
+        .menu-item { padding: 15px; border-radius: 12px; margin: 10px 0; background: #f5f7f9; font-weight: 600; cursor: pointer; color: #333; }
+        .menu-item.active { background: #eef2f7; border-left: 5px solid var(--c-hl3); }
 
-        .header-right {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
+        /* --- CUADRO DE TEXTO 3D --- */
+        .text-3d-box { margin: 15px; padding: 25px 20px; background: linear-gradient(145deg, #f0f0f0, #e6e6e6); border-radius: 20px; border: 1px solid #cccccc; box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); overflow-y: auto; scroll-behavior: smooth; text-align: justify; line-height: 1.35; font-size: 0.92rem; flex-grow: 1; margin-bottom: 110px; }
 
-        header h1 {
-            font-size: 1rem;
-            margin: 0;
-            text-align: center;
-            font-weight: 800;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            text-transform: uppercase;
-        }
-
-        .nav-btn {
-            background: #fff;
-            border: 1px solid #ddd;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .hamburger {
-            font-size: 1.6rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-            color: #333;
-        }
-
-        /* Menú Lateral */
-        .side-menu {
-            position: fixed;
-            left: -280px;
-            top: 0;
-            width: 250px;
-            height: 100%;
-            background: #fff;
-            z-index: 2005;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 25px;
-            box-shadow: 5px 0 20px rgba(0,0,0,0.2);
-        }
-        .side-menu.open { left: 0; }
-        .side-menu h2 { font-size: 1.2rem; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
-        .menu-item { padding: 14px; border-radius: 10px; margin: 8px 0; cursor: pointer; background: #f0f2f5; font-weight: 600; }
-
-        /* Recuadro de Texto 3D con Borde */
-        .text-3d-box {
-            margin: 15px 15px 120px 15px;
-            padding: 25px 20px;
-            background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-            border-radius: 20px;
-            border: 1px solid #cccccc;
-            box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5);
-            overflow-y: auto;
-            scroll-behavior: smooth;
-            text-align: justify;
-            line-height: 1.35;
-            font-size: 0.92rem;
-            flex-grow: 1;
-        }
-
-        /* Burbujas Flotantes */
-        .bubbles-footer {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 94%;
-            max-width: 450px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px);
-            padding: 10px;
-            border-radius: 40px;
-            display: flex;
-            justify-content: space-around;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            z-index: 1000;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-
-        .q-bubble {
-            width: 38px; height: 38px; border-radius: 50%;
-            background: #fff; display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 0.75rem; color: #444; border: 2px solid #ddd;
-            transition: 0.3s;
-        }
-
+        /* --- BURBUJAS --- */
+        .bubbles-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); padding: 10px; border-radius: 40px; display: flex; justify-content: space-around; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 1000; border: 1px solid rgba(255,255,255,0.3); }
+        .q-bubble { width: 38px; height: 38px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; border: 2px solid #ddd; }
         .q-bubble.done { color: white !important; background-color: var(--c-correct) !important; }
         .q-bubble.error { color: white !important; background-color: var(--c-error) !important; }
 
-        /* Resaltados */
+        /* --- RESALTADOS --- */
         .hl { border-radius: 4px; transition: 0.6s ease; }
-        .hl-active-113 { background: var(--c-113); } .hl-active-114 { background: var(--c-114); }
-        .hl-active-115 { background: var(--c-115); } .hl-active-116 { background: var(--c-116); }
-        .hl-active-117 { background: var(--c-117); } .hl-active-118 { background: var(--c-118); }
-        .hl-active-119 { background: var(--c-119); }
+        .hl-active-0 { background: var(--c-hl1); } .hl-active-1 { background: var(--c-hl2); }
+        .hl-active-2 { background: var(--c-hl3); } .hl-active-3 { background: var(--c-hl4); }
+        .hl-active-4 { background: var(--c-hl5); } .hl-active-5 { background: var(--c-hl6); }
+        .hl-active-6 { background: var(--c-hl7); }
 
-        /* Bottom Sheet */
-        .bottom-sheet {
-            position: fixed; bottom: -100%; left: 0; width: 100%;
-            background: white; border-top-left-radius: 30px; border-top-right-radius: 30px;
-            padding: 25px; box-sizing: border-box; z-index: 2000;
-            transition: 0.4s cubic-bezier(0, 0.6, 0.4, 1);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-        }
+        /* --- POPUPS --- */
+        .bottom-sheet { position: fixed; bottom: -100%; left: 0; width: 100%; background: white; border-top-left-radius: 30px; border-top-right-radius: 30px; padding: 25px; box-sizing: border-box; z-index: 2100; transition: bottom 0.4s ease; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); }
         .bottom-sheet.open { bottom: 0; }
-
-        .option-btn {
-            width: 100%; padding: 15px; margin: 8px 0; border: 1px solid #eee; border-radius: 12px;
-            background: #f8f9fa; font-weight: 600; text-align: left; color: #000; font-size: 0.95rem;
-        }
-
+        .option-btn { width: 100%; padding: 15px; margin: 8px 0; border: 1px solid #eee; border-radius: 12px; background: #f8f9fa; font-weight: 600; text-align: left; color: #000; }
         .btn-correct { background-color: var(--c-correct) !important; color: white !important; }
         .btn-incorrect { background-color: var(--c-error) !important; color: white !important; }
-
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); display: none; z-index: 1500; }
-        #toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); padding: 10px 30px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 3000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; z-index: 2000; }
+        #toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); padding: 10px 30px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 3000; }
     </style>
 </head>
 <body>
@@ -185,50 +76,51 @@
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
 
 <div class="side-menu" id="side-menu">
-    <h2>Biblioteca</h2>
-    <div class="menu-item" onclick="loadText(1)">1. Anime and Manga</div>
-    <div class="menu-item" style="opacity: 0.4;">Próximamente...</div>
+    <h2>BIBLIOTECA</h2>
+    <div id="menu-list">
+        </div>
 </div>
 
 <header>
-    <div class="header-left">
-        <button class="hamburger" onclick="toggleMenu()">☰</button>
-    </div>
-    <div class="header-center">
-        <h1 id="header-title">Anime and Manga</h1>
-    </div>
-    <div class="header-right">
-        <button class="nav-btn" onclick="prevText()">‹</button>
-        <button class="nav-btn" onclick="nextText()">›</button>
+    <button class="hamburger" id="btn-hamburger" onclick="toggleMenu()">☰</button>
+    <h1 id="header-title">ANIME AND MANGA</h1>
+    <div class="nav-group">
+        <button class="nav-btn" onclick="changeText(-1)">‹</button>
+        <button class="nav-btn" onclick="changeText(1)">›</button>
     </div>
 </header>
 
 <div class="text-3d-box" id="scroll-box">
-    <p>Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="text-113" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="text-114" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span></p>
-    
-    <p>Most Anime movies come from Manga or comics, which means written and drawn stories. During the 1970s, many Anime movies were made from <span id="text-115" class="hl">Manga written by Osamu Tezuka, an artist well-known for his writings about the future, wonderful machines and amazing adventures.</span></p>
-    
-    <p>Here in the West, we believe Anime is about Japanese cartoons, but it's <span id="text-116" class="hl">actually the word they use in Japan for any kind of video cartoon.</span> The same happens with Manga, which in Japan refers to all comics everywhere, but <span id="text-117" class="hl">in the West it means Japanese comics.</span> Anime movies are made with the help of computer programs and special teams, while Manga can be written and drawn by a single artist.</p>
-    
-    <p><span id="text-118" class="hl">International companies rewrite Manga stories from Japanese into other languages and sell them.</span> However, some fans do this before the companies in order to share the stories online for free. More people can read Manga now, but <span id="text-119" class="hl">some companies say that's a form of stealing.</span></p>
-</div>
+    </div>
 
-<nav class="bubbles-footer">
-    <div class="q-bubble" id="bubble-0" onclick="openSheet(0)">113</div>
-    <div class="q-bubble" id="bubble-1" onclick="openSheet(1)">114</div>
-    <div class="q-bubble" id="bubble-2" onclick="openSheet(2)">115</div>
-    <div class="q-bubble" id="bubble-3" onclick="openSheet(3)">116</div>
-    <div class="q-bubble" id="bubble-4" onclick="openSheet(4)">117</div>
-    <div class="q-bubble" id="bubble-5" onclick="openSheet(5)">118</div>
-    <div class="q-bubble" id="bubble-6" onclick="openSheet(6)">119</div>
-</nav>
+<nav class="bubbles-footer" id="bubbles-container">
+    </nav>
 
 <div class="bottom-sheet" id="sheet">
     <div id="sheet-content"></div>
 </div>
 
 <script>
-    // Audio y Vibración (Motor previo mantenido)
+    // BIBLIOTECA DE TEXTOS
+    const biblioteca = [
+        {
+            titulo: "Anime and Manga",
+            cuerpo: `Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="hl-0" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="hl-1" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span><br><br> Most Anime movies come from Manga or comics, which means written and drawn stories. During the 1970s, many Anime movies were made from <span id="hl-2" class="hl">Manga written by Osamu Tezuka, an artist well-known for his writings about the future, wonderful machines and amazing adventures.</span><br><br> Here in the West, we believe Anime is about Japanese cartoons, but it's <span id="hl-3" class="hl">actually the word they use in Japan for any kind of video cartoon.</span> The same happens with Manga, which in Japan refers to all comics everywhere, but <span id="hl-4" class="hl">in the West it means Japanese comics.</span> Anime movies are made with the help of computer programs and special teams, while Manga can be written and drawn by a single artist.<br><br> <span id="hl-5" class="hl">International companies rewrite Manga stories from Japanese into other languages and sell them.</span> However, some fans do this before the companies in order to share the stories online for free. More people can read Manga now, but <span id="hl-6" class="hl">some companies say that's a form of stealing.</span>`,
+            preguntas: [
+                { id: 113, q: "Making movies in Japan was difficult because most of the time", opts: ["A. foreign actors", "B. distant places", "C. money not available"], correct: "C" },
+                { id: 114, q: "When making a cartoon, artists drew people who", opts: ["A. looked different", "B. acted well", "C. lived in usual places"], correct: "A" },
+                { id: 115, q: "What made Osamu Tezuka important?", opts: ["A. famous movies", "B. various stories", "C. instruments"], correct: "B" },
+                { id: 116, q: "In Japan, the term Anime includes", opts: ["A. just Japanese", "B. all video cartoons", "C. only Western"], correct: "B" },
+                { id: 117, q: "Western countries believe Manga is made", opts: ["A. with software", "B. by many artists", "C. in Japan"], correct: "C" },
+                { id: 118, q: "Manga in other languages are sold by", opts: ["A. internet", "B. special companies", "C. Japanese people"], correct: "B" },
+                { id: 119, q: "Companies think free online Manga is", opts: ["A. stealing", "B. sharing", "C. downloading"], correct: "A" }
+            ]
+        }
+    ];
+
+    let currentIdx = 0;
+
+    // AUDIO
     const AudioEngine = (() => {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
         const play = (freq, type, decay, vol) => {
@@ -246,48 +138,60 @@
         };
     })();
 
-    const data = [
-        { id: 113, correct: "C", q: "113. Making movies in Japan was difficult because most of the time", opts: ["A. actors were foreign.", "B. places were miles away.", "C. money was not available."] },
-        { id: 114, correct: "A", q: "114. When making a cartoon, artists drew people who", opts: ["A. looked very different.", "B. acted very well.", "C. lived in usual places."] },
-        { id: 115, correct: "B", q: "115. What made Osamu Tezuka an important writer?", opts: ["A. his famous movies", "B. his various stories", "C. his advanced instruments"] },
-        { id: 116, correct: "B", q: "116. In Japan, the term Anime includes", opts: ["A. just Japanese cartoons.", "B. all types of video cartoons.", "C. only Western cartoons."] },
-        { id: 117, correct: "C", q: "117. Western countries believe all Manga is made", opts: ["A. with the latest software.", "B. by several artists.", "C. in Japan."] },
-        { id: 118, correct: "B", q: "118. Manga stories found in another language are sold", opts: ["A. on the internet.", "B. by special companies.", "C. to Japanese people."] },
-        { id: 119, correct: "A", q: "119. Companies think free online Manga should be", opts: ["A. considered as stolen.", "B. shared online.", "C. downloaded."] }
-    ];
+    // FUNCIONES APP
+    function renderApp() {
+        const t = biblioteca[currentIdx];
+        document.getElementById('header-title').innerText = t.titulo;
+        document.getElementById('scroll-box').innerHTML = t.cuerpo;
+        
+        // Burbujas
+        const bCont = document.getElementById('bubbles-container');
+        bCont.innerHTML = t.preguntas.map((p, i) => `<div class="q-bubble" id="bubble-${i}" onclick="openSheet(${i})">${p.id}</div>`).join('');
+        
+        // Lista Menú
+        const mList = document.getElementById('menu-list');
+        mList.innerHTML = biblioteca.map((text, i) => `<div class="menu-item ${i === currentIdx ? 'active' : ''}" onclick="loadText(${i})">${i+1}. ${text.titulo}</div>`).join('');
+    }
 
-    function toggleMenu() { document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').style.display = 'block'; }
-    function closeAll() { document.getElementById('side-menu').classList.remove('open'); document.getElementById('sheet').classList.remove('open'); document.getElementById('overlay').style.display = 'none'; }
+    function toggleMenu() { 
+        document.getElementById('side-menu').classList.add('open'); 
+        document.getElementById('overlay').style.display = 'block'; 
+    }
+
+    function closeAll() { 
+        document.getElementById('side-menu').classList.remove('open'); 
+        document.getElementById('sheet').classList.remove('open'); 
+        document.getElementById('overlay').style.display = 'none'; 
+    }
 
     function openSheet(index) {
         AudioEngine.click();
         if (navigator.vibrate) navigator.vibrate(10);
-        const item = data[index];
+        const p = biblioteca[currentIdx].preguntas[index];
         const content = document.getElementById('sheet-content');
-        content.innerHTML = `<p style="font-weight:800; margin-bottom:15px; color:#000;">${item.q}</p>
-            ${item.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`;
+        content.innerHTML = `<p style="font-weight:800; margin-bottom:15px; color:#000;">${p.q}</p>
+            ${p.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`;
         document.getElementById('sheet').classList.add('open');
         document.getElementById('overlay').style.display = 'block';
     }
 
-    function verify(choice, btn, index) {
-        const item = data[index];
-        const isCorrect = choice === item.correct;
-        const bubble = document.getElementById(`bubble-${index}`);
-        const hlElem = document.getElementById(`text-${item.id}`);
-        const scrollBox = document.getElementById('scroll-box');
+    function verify(choice, btn, qIdx) {
+        const p = biblioteca[currentIdx].preguntas[qIdx];
+        const isCorrect = choice === p.correct;
+        const bubble = document.getElementById(`bubble-${qIdx}`);
+        const hlElem = document.getElementById(`hl-${qIdx}`);
 
         if (isCorrect) {
             btn.classList.add('btn-correct'); showToast("Melo", "#27ae60");
-            bubble.classList.add('done'); bubble.style.borderColor = `var(--c-${item.id})`;
+            bubble.classList.add('done'); bubble.style.borderColor = `var(--c-hl${qIdx+1})`;
             AudioEngine.correct(); if (navigator.vibrate) navigator.vibrate(50);
         } else {
             btn.classList.add('btn-incorrect'); showToast("Nel, pilas", "#c0392b");
             bubble.classList.add('error'); AudioEngine.incorrect();
             if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
         }
-        hlElem.classList.add(`hl-active-${item.id}`);
-        setTimeout(() => { scrollBox.scrollTo({ top: hlElem.offsetTop - 40, behavior: 'smooth' }); }, 400);
+        hlElem.classList.add(`hl-active-${qIdx}`);
+        setTimeout(() => { document.getElementById('scroll-box').scrollTo({ top: hlElem.offsetTop - 40, behavior: 'smooth' }); }, 400);
         setTimeout(closeAll, 1200);
     }
 
@@ -296,10 +200,15 @@
         setTimeout(() => t.style.display = 'none', 1400);
     }
 
-    function prevText() { showToast("No hay textos anteriores", "#333"); }
-    function nextText() { showToast("No hay más textos", "#333"); }
-    function loadText(id) { closeAll(); }
-</script>
+    function changeText(dir) {
+        let newIdx = currentIdx + dir;
+        if(newIdx >= 0 && newIdx < biblioteca.length) loadText(newIdx);
+    }
 
+    function loadText(id) { currentIdx = id; renderApp(); closeAll(); }
+
+    // Iniciar
+    renderApp();
+</script>
 </body>
 </html>
