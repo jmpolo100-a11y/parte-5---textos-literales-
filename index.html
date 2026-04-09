@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Inmersión Total</title>
+    <title>Saber 11 - Elite UX</title>
     <style>
         :root {
             --bg-page: #E0E5EC;
-            /* Degradado Gris Suave para el fondo del texto */
-            --paper-grad: linear-gradient(145deg, #f0f0f0, #e6e6e6);
-            --text-color: #333;
-            /* Colores de resaltado */
+            --paper-grad: linear-gradient(145deg, #eeeeee, #e2e2e2);
             --c-113: #FFD700; --c-114: #4CAF50; --c-115: #2196F3;
             --c-116: #FF9800; --c-117: #9C27B0; --c-118: #E91E63;
             --c-119: #00BCD4;
@@ -23,76 +20,60 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden; /* Evitamos scroll en el body, lo hará el cuadro */
         }
 
-        /* Recuadro de Texto 3D con Fondo Gris Degradado */
+        /* Recuadro 3D con Scroll Interno y Texto Compacto */
         .text-3d-box {
-            margin: 30px 15px 150px 15px;
-            padding: 30px 20px;
-            background: #e6e6e6; /* Base para el degradado */
+            margin: 20px 15px 120px 15px;
+            padding: 25px 20px;
             background: var(--paper-grad);
             border-radius: 20px;
-            box-shadow: 10px 10px 20px rgba(163,177,198,0.5), 
-                       -10px -10px 20px rgba(255,255,255, 0.6),
-                       inset 0 0 1px rgba(0,0,0,0.1);
+            box-shadow: 10px 10px 20px rgba(163,177,198,0.5), -10px -10px 20px rgba(255,255,255, 0.6);
             max-width: 550px;
             text-align: justify;
-            line-height: 1.6;
-            font-size: 0.95rem;
-            color: var(--text-color);
+            line-height: 1.35; /* Interlineado compactado solicitado */
+            font-size: 0.92rem;
+            color: #333;
+            overflow-y: auto; /* Scroll interno para el auto-scroll */
+            scroll-behavior: smooth; /* Movimiento fluido */
+            -webkit-overflow-scrolling: touch;
         }
 
-        h1 { 
-            font-size: 1.5rem; 
-            text-align: center; 
-            margin-top: 0; 
-            color: #000;
-            margin-bottom: 25px;
-            text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
-        }
+        h1 { font-size: 1.3rem; text-align: center; margin-bottom: 15px; color: #000; }
 
-        /* Barra de Burbujas Flotante */
+        /* Burbujas Flotantes */
         .bubbles-footer {
             position: fixed;
-            bottom: 25px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 92%;
+            width: 94%;
             max-width: 480px;
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.4);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            padding: 12px;
+            padding: 10px;
             border-radius: 40px;
             display: flex;
             justify-content: space-around;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
             z-index: 1000;
         }
 
         .q-bubble {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 0.8rem;
-            color: #444;
-            border: 2px solid #ddd;
-            transition: all 0.4s ease;
+            width: 38px; height: 38px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 0.75rem; color: #444;
+            border: 2px solid #ddd; transition: 0.3s;
         }
 
         .q-bubble.done { color: white !important; background-color: #27ae60 !important; }
         .q-bubble.error { color: white !important; background-color: #c0392b !important; }
 
-        /* Resaltados (ahora se activan SIEMPRE) */
-        .hl { border-radius: 4px; transition: background 0.6s ease; }
+        /* Resaltados */
+        .hl { border-radius: 4px; transition: background 0.6s ease; display: inline; }
         .hl-active-113 { background: var(--c-113); }
         .hl-active-114 { background: var(--c-114); }
         .hl-active-115 { background: var(--c-115); }
@@ -101,49 +82,27 @@
         .hl-active-118 { background: var(--c-118); }
         .hl-active-119 { background: var(--c-119); }
 
-        /* Bottom Sheet */
+        /* Pop-up */
         .bottom-sheet {
-            position: fixed;
-            bottom: -100%;
-            left: 0;
-            width: 100%;
-            background: white;
-            border-top-left-radius: 30px;
-            border-top-right-radius: 30px;
-            padding: 25px;
-            box-sizing: border-box;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+            position: fixed; bottom: -100%; left: 0; width: 100%;
+            background: white; border-top-left-radius: 30px; border-top-right-radius: 30px;
+            padding: 25px; box-sizing: border-box; z-index: 2000;
             transition: bottom 0.4s cubic-bezier(0, 0.6, 0.4, 1);
-            z-index: 2000;
         }
         .bottom-sheet.open { bottom: 0; }
 
         .option-btn {
-            width: 100%; padding: 15px; margin: 8px 0;
+            width: 100%; padding: 14px; margin: 6px 0;
             border: 1px solid #eee; border-radius: 12px;
             background: #f8f9fa; font-weight: 600; text-align: left;
-            color: #000;
-            font-size: 0.95rem;
-            transition: transform 0.1s;
+            color: #000; font-size: 0.9rem;
         }
 
-        .option-btn:active { transform: scale(0.97); }
+        .btn-correct { background-color: #27ae60 !important; color: white !important; }
+        .btn-incorrect { background-color: #c0392b !important; color: white !important; }
 
-        /* Feedback de Relleno */
-        .btn-correct { background-color: #27ae60 !important; color: white !important; border: none; }
-        .btn-incorrect { background-color: #c0392b !important; color: white !important; border: none; }
-
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.2); display: none; z-index: 1500;
-        }
-
-        #toast {
-            position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
-            padding: 8px 25px; border-radius: 50px; color: white;
-            font-weight: 800; display: none; z-index: 3000;
-            font-size: 0.9rem;
-        }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); display: none; z-index: 1500; }
+        #toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); padding: 8px 25px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 3000; }
     </style>
 </head>
 <body>
@@ -151,7 +110,7 @@
 <div id="toast"></div>
 <div class="overlay" id="overlay" onclick="closeSheet()"></div>
 
-<div class="text-3d-box">
+<div class="text-3d-box" id="main-scroll-box">
     <h1>Anime and Manga</h1>
     <p>Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="text-113" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="text-114" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span></p>
     
@@ -177,40 +136,23 @@
 </div>
 
 <script>
-    // MOTOR DE SONIDO (Genera audio sintético sin archivos)
+    // AUDIO ENGINE
     const AudioEngine = (() => {
         const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        
         const play = (freq, type, decay, vol) => {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.type = type;
-            osc.frequency.setValueAtTime(freq, ctx.currentTime);
+            const osc = ctx.createOscillator(); const gain = ctx.createGain();
+            osc.type = type; osc.frequency.setValueAtTime(freq, ctx.currentTime);
             gain.gain.setValueAtTime(vol, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + decay);
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.start();
-            osc.stop(ctx.currentTime + decay);
+            osc.connect(gain); gain.connect(ctx.destination);
+            osc.start(); osc.stop(ctx.currentTime + decay);
         };
-
         return {
-            click: () => play(600, 'sine', 0.1, 0.3),
-            correct: () => {
-                play(500, 'sine', 0.2, 0.4);
-                setTimeout(() => play(800, 'sine', 0.4, 0.4), 100);
-            },
-            incorrect: () => {
-                play(200, 'triangle', 0.3, 0.5);
-                setTimeout(() => play(150, 'triangle', 0.3, 0.5), 150);
-            }
+            click: () => play(600, 'sine', 0.1, 0.2),
+            correct: () => { play(500, 'sine', 0.2, 0.3); setTimeout(() => play(800, 'sine', 0.4, 0.3), 100); },
+            incorrect: () => { play(200, 'triangle', 0.3, 0.4); setTimeout(() => play(150, 'triangle', 0.3, 0.4), 150); }
         };
     })();
-
-    // MOTOR DE VIBRACIÓN
-    const vibrate = (pattern) => {
-        if (navigator.vibrate) navigator.vibrate(pattern);
-    };
 
     const data = [
         { id: 113, correct: "C" }, { id: 114, correct: "A" }, { id: 115, correct: "B" },
@@ -230,17 +172,12 @@
 
     function openSheet(index) {
         AudioEngine.click();
-        vibrate(10); // Feedback táctil suave al tocar burbuja
-        
-        const item = data[index];
+        if (navigator.vibrate) navigator.vibrate(10);
         const content = document.getElementById('sheet-content');
-        const qText = questionsHTML[index].split('<br><br>')[0];
-        const options = questionsHTML[index].split('<br><br>')[1].split('<br>');
-
-        content.innerHTML = `
-            <p style="font-weight:800; font-size:1.1rem; margin-bottom:15px; color:#000; line-height:1.4">${qText}</p>
-            ${options.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}
-        `;
+        const [qText, optsRaw] = questionsHTML[index].split('<br><br>');
+        const options = optsRaw.split('<br>');
+        content.innerHTML = `<p style="font-weight:800; margin-bottom:12px; color:#000;">${qText}</p>
+            ${options.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`;
         document.getElementById('sheet').classList.add('open');
         document.getElementById('overlay').style.display = 'block';
     }
@@ -254,36 +191,27 @@
         const item = data[index];
         const isCorrect = choice === item.correct;
         const bubble = document.getElementById(`bubble-${index}`);
-
-        // Bloquear interacciones
-        const buttons = document.querySelectorAll('.option-btn');
-        buttons.forEach(b => b.style.pointerEvents = 'none');
+        const highlightElement = document.getElementById(`text-${item.id}`);
+        const scrollBox = document.getElementById('main-scroll-box');
 
         if (isCorrect) {
-            // UI Melo
-            btn.classList.add('btn-correct');
-            showToast("Melo", "#27ae60");
-            bubble.classList.add('done');
-            bubble.style.borderColor = `var(--c-${item.id})`;
-            bubble.style.borderWidth = "3px";
-
-            // Inmersión Correcta
-            AudioEngine.correct();
-            vibrate(50); // Vibración corta y firme
+            btn.classList.add('btn-correct'); showToast("Melo", "#27ae60");
+            bubble.classList.add('done'); bubble.style.borderColor = `var(--c-${item.id})`;
+            AudioEngine.correct(); if (navigator.vibrate) navigator.vibrate(50);
         } else {
-            // UI Nel
-            btn.classList.add('btn-incorrect');
-            showToast("Nel, pilas", "#c0392b");
-            bubble.classList.add('error');
-            bubble.style.borderColor = "#c0392b";
-
-            // Inmersión Incorrecta
-            AudioEngine.incorrect();
-            vibrate([100, 50, 100]); // Vibración doble de error
+            btn.classList.add('btn-incorrect'); showToast("Nel, pilas", "#c0392b");
+            bubble.classList.add('error'); AudioEngine.incorrect();
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
         }
 
-        // --- CAMBIO CLAVE: Resaltar SIEMPRE ---
-        document.getElementById(`text-${item.id}`).classList.add(`hl-active-${item.id}`);
+        // Siempre resaltar
+        highlightElement.classList.add(`hl-active-${item.id}`);
+
+        // UX: Auto-Scroll hacia el elemento resaltado
+        setTimeout(() => {
+            const topPos = highlightElement.offsetTop;
+            scrollBox.scrollTo({ top: topPos - 60, behavior: 'smooth' });
+        }, 400);
 
         setTimeout(closeSheet, 1200);
     }
