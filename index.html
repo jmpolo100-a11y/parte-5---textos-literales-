@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Elite v15</title>
+    <title>Saber 11 - Elite v17</title>
     <style>
         :root {
             --bg-page: #E0E5EC;
             --c-correct: #27ae60; --c-error: #c0392b;
-            --grad-0: linear-gradient(135deg, #FFD700, #FF8C00);
-            --grad-1: linear-gradient(135deg, #2196F3, #004a99);
-            --grad-2: linear-gradient(135deg, #9C27B0, #4A148C);
+            --grad-dark: linear-gradient(180deg, #2c3e50, #000000);
+            /* Colores para el delineado de las burbujas */
             --c-hl0: #FFD700; --c-hl1: #4CAF50; --c-hl2: #2196F3;
             --c-hl3: #FF9800; --c-hl4: #9C27B0; --c-hl5: #E91E63;
             --c-hl6: #00BCD4;
@@ -18,16 +17,15 @@
 
         body { margin: 0; background-color: var(--bg-page); font-family: -apple-system, system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-        /* --- HEADER: FLECHAS PEGADAS AL TITULO --- */
         header { 
             position: relative;
             display: flex; 
             align-items: center; 
-            justify-content: center; /* Centra todo el grupo */
+            justify-content: center; 
             height: 85px; 
             z-index: 3000; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            transition: background 0.5s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: var(--grad-dark);
             padding: 10px 10px 0 10px;
         }
 
@@ -43,11 +41,10 @@
             z-index: 3010;
         }
 
-        /* Grupo central para que las flechas escolten al título */
         .nav-group-center {
             display: flex;
             align-items: center;
-            gap: 15px; /* Espacio pequeño entre flechas y título */
+            gap: 15px;
             max-width: 80%;
         }
 
@@ -58,14 +55,14 @@
             text-transform: uppercase; 
             color: #fff;
             text-align: center;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
         }
 
         .nav-btn { 
             width: 42px; height: 42px; 
             border-radius: 50%; 
-            border: 2px solid #fff;
-            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.1);
             color: #fff;
             font-size: 1.4rem;
             display: flex;
@@ -78,7 +75,6 @@
         }
         .nav-btn:active { transform: scale(0.9); background: #fff; color: #000; }
 
-        /* --- CONTENIDO --- */
         .side-menu { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 4000; transition: transform 0.3s ease; padding: 30px 20px; box-sizing: border-box; }
         .side-menu.open { transform: translateX(280px); }
         .menu-item { padding: 15px; border-radius: 12px; margin: 10px 0; background: #f5f7f9; font-weight: 600; cursor: pointer; border-left: 5px solid transparent; }
@@ -94,7 +90,7 @@
         }
 
         .bubbles-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); padding: 10px; border-radius: 40px; display: flex; justify-content: space-around; z-index: 1000; border: 1px solid rgba(255,255,255,0.3); }
-        .q-bubble { width: 38px; height: 38px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; border: 2px solid #ddd; transition: 0.3s; }
+        .q-bubble { width: 38px; height: 38px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; border: 2px solid #ddd; transition: border-color 0.3s; }
         .q-bubble.done { color: white !important; background-color: var(--c-correct) !important; }
         .q-bubble.error { color: white !important; background-color: var(--c-error) !important; }
 
@@ -143,7 +139,6 @@
     const biblioteca = [
         {
             titulo: "Anime and Manga",
-            color: "var(--grad-0)",
             cuerpo: `Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="hl-0" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="hl-1" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span><br><br> Most Anime movies come from Manga or comics, which means written and drawn stories. During the 1970s, many Anime movies were made from <span id="hl-2" class="hl">Manga written by Osamu Tezuka, an artist well-known for his writings about the future, wonderful machines and amazing adventures.</span><br><br> Here in the West, we believe Anime is about Japanese cartoons, but it's <span id="hl-3" class="hl">actually the word they use in Japan for any kind of video cartoon.</span> The same happens with Manga, which in Japan refers to all comics everywhere, but <span id="hl-4" class="hl">in the West it means Japanese comics.</span> Anime movies are made with the help of computer programs and special teams, while Manga can be written and drawn by a single artist.<br><br> <span id="hl-5" class="hl">International companies rewrite Manga stories from Japanese into other languages and sell them.</span> However, some fans do this before the companies in order to share the stories online for free. More people can read Manga now, but <span id="hl-6" class="hl">some companies say that's a form of stealing.</span>`,
             preguntas: [
                 { id: 113, q: "Making movies in Japan was difficult because most of the time", opts: ["A. actors were foreign.", "B. places were miles away.", "C. money was not available."], correct: "C" },
@@ -157,7 +152,6 @@
         },
         {
             titulo: "How planes were born",
-            color: "var(--grad-1)",
             cuerpo: `The history of planes started before 1800. In the 16th century, Mark Clerck was the first man to think of flying machines; he had dreams and made drawings of helicopters, but he did not actually build them.<br><br> Many years later, the Irwins, two French brothers, made a balloon that <span id="hl-1" class="hl">flew for five miles in 1738.</span> In <span id="hl-0" class="hl">1848, John Hartman made a small plane that was able to make short flights.</span> Then, in January 1890, Samuel Secrest tried to fly a flying machine, but he couldn't because the <span id="hl-2" class="hl">weather was too bad... he stopped the project.</span><br><br> In 1901, the Americans Orville and Wilbur Wright built a machine to fly, but <span id="hl-3" class="hl">it didn't work the first time. Finally, on December 17, 1903, they flew the Kitty Hawk Flyer, which was in the air for 12 seconds.</span> The Wright Brothers made 1,000 short-distance flights in the desert in North Carolina. Thanks to the experience learned during these flights, the <span id="hl-4" class="hl">practice of air transport began in 1907.</span><br><br> Then, in 1910, the first airplane company was created by Gabriel and Charles Oliveri, while the American Brett Graham and the Englishman Mike Major started the first US airline in New York. Air transport is now one of the biggest businesses in the world. <span id="hl-6" class="hl">Graham was an American.</span>`,
             preguntas: [
                 { id: 113, q: "When did the first plane fly?", opts: ["A. in 1890", "B. in 1738", "C. in 1848"], correct: "C" },
@@ -171,8 +165,7 @@
         },
         {
             titulo: "Paula Radcliffe's day",
-            color: "var(--grad-2)",
-            cuerpo: `I'm an English runner who has won the world marathon six times. I also won four marathons in the USA and three in London. These are the activities I do when I'm not in a competition:<br><br> 8.30 am - <span id="hl-0" class="hl">My daughter Vicky comes to our room before we wake up and says good morning to Gary and me.</span> Later, I eat some melon and give cereal to her. Then, I have a look at the newspaper.<br><br> 9.45 am - We leave Vicky at her theatre class; then, I run and <span id="hl-1" class="hl">Gary cycles next to me to keep me close to my time goal.</span> I sometimes surf after this.<br><br> 12.30 pm - <span id="hl-2" class="hl">After meeting Vicky at school, we get home and have a big lunch.</span> Then, I play with her.<br><br> 2.10 pm - Gary usually takes Vicky out while <span id="hl-3" class="hl">I sleep.</span> When I get up, I boil some water for tea.<br><br> 7.30 pm - In the evening, Gary gives Vicky tea while I finish doing my exercises. Afterwards, <span id="hl-4" class="hl">I cook dinner</span> while Gary gives Vicky a bath. <br><br> 8.20 pm - Vicky goes to bed. I read my friends' messages on the computer, watch volleyball on TV, and <span id="hl-5" class="hl">have a conversation with Gary.</span><br><br> 10.30 pm - Time for bed. <span id="hl-6" class="hl">I brush my teeth and wash my hands and face.</span> I enjoy reading, but I haven't done it much since Vicky was born.`,
+            cuerpo: `I'm an English runner who has won the world marathon six times. I also won four marathons in the USA and three in London. These are the activities I do when I'm not in a competition:<br><br> 8.30 am - <span id="hl-0" class="hl">My daughter Vicky comes to our room before we wake up and says good morning to Gary and me.</span> Later, I eat some melon and give cereal to her. Then, I have a look at the newspaper.<br><br> 9.45 am - We leave Vicky at her theatre class; then, I run and <span id="hl-1" class="hl">Gary cycles next to me to keep me close to my time goal.</span> I sometimes surf after this.<br><br> 12.30 pm - <span id="hl-2" class="hl">After meeting Vicky at school, we get home and have a big lunch.</span> Then, I play with her.<br><br> 2.10 pm - Gary usually takes Vicky out while <span id="hl-3" class="hl">I sleep.</span> When I get up, I boil some water for tea.<br><br> 7.30 pm - In the evening, Gary gives Vicky tea while I finish doing my exercises. Afterwards, <span id="hl-4" class="hl">I cook dinner</span> mientras Gary baña a Vicky.<br><br> 8.20 pm - Vicky goes to bed. I read my friends' messages on the computer, watch volleyball on TV, and <span id="hl-5" class="hl">have a conversation with Gary.</span><br><br> 10.30 pm - Time for bed. <span id="hl-6" class="hl">I brush my teeth and wash my hands and face.</span> I enjoy reading, but I haven't done it much since Vicky was born.`,
             preguntas: [
                 { id: 103, q: "In the morning, Vicky goes to her parents' room to", opts: ["A. have a snack.", "B. give them the paper.", "C. say hello to them."], correct: "C" },
                 { id: 104, q: "While Paula has her sports practice, Gary", opts: ["A. goes surfing.", "B. rides his bicycle.", "C. takes an acting class."], correct: "B" },
@@ -201,7 +194,6 @@
     function renderApp() {
         const t = biblioteca[currentIdx];
         document.getElementById('header-title').innerText = t.titulo;
-        document.getElementById('main-header').style.background = t.color;
         document.getElementById('scroll-box').innerHTML = t.cuerpo;
         document.getElementById('scroll-box').scrollTop = 0;
         document.getElementById('bubbles-container').innerHTML = t.preguntas.map((p, i) => `<div class="q-bubble" id="bubble-${i}" onclick="openSheet(${i})">${p.id}</div>`).join('');
@@ -220,10 +212,10 @@
         if (isCorrect) {
             btn.classList.add('btn-correct'); showToast("Melo", "#27ae60");
             bubble.classList.add('done'); 
-            bubble.style.borderColor = `var(--c-hl${qIdx})`; 
+            bubble.style.borderColor = `var(--c-hl${qIdx})`; // Delineado restaurado
             AudioEngine.correct(); if (navigator.vibrate) navigator.vibrate(60);
         } else {
-            btn.classList.add('btn-incorrect'); showToast("Nel, pilas", "#c0392b");
+            btn.classList.add('btn-incorrect'); showToast("Yaper", "#c0392b");
             bubble.classList.add('error'); AudioEngine.incorrect(); if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
         }
         if(hlElem) {
