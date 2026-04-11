@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Elite v18</title>
+    <title>Saber 11 - Elite v18.5</title>
     <style>
         :root {
             --bg-page: #E0E5EC;
@@ -18,103 +18,39 @@
         body { margin: 0; background-color: var(--bg-page); font-family: -apple-system, system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
         header { 
-            position: relative;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            height: 85px; 
-            z-index: 3000; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            background: var(--grad-dark);
-            padding: 10px 10px 0 10px;
+            position: relative; display: flex; align-items: center; justify-content: center; 
+            height: 85px; z-index: 3000; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: var(--grad-dark); padding: 10px 10px 0 10px;
         }
 
-        .hamburger { 
-            position: absolute;
-            top: 8px;
-            left: 15px;
-            font-size: 1.8rem; 
-            background: none; 
-            border: none; 
-            color: #fff; 
-            cursor: pointer;
-            z-index: 3010;
-        }
+        .hamburger { position: absolute; top: 8px; left: 15px; font-size: 1.8rem; background: none; border: none; color: #fff; cursor: pointer; z-index: 3010; }
 
-        .nav-group-center {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            max-width: 80%;
-        }
+        .nav-group-center { display: flex; align-items: center; gap: 15px; max-width: 80%; }
 
-        header h1 { 
-            font-size: 0.85rem; 
-            margin: 0; 
-            font-weight: 900; 
-            text-transform: uppercase; 
-            color: #fff;
-            text-align: center;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-        }
+        header h1 { font-size: 0.85rem; margin: 0; font-weight: 900; text-transform: uppercase; color: #fff; text-align: center; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
 
         .nav-btn { 
-            width: 42px; height: 42px; 
-            border-radius: 50%; 
-            border: 2px solid rgba(255,255,255,0.5);
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            backdrop-filter: blur(5px);
-            flex-shrink: 0;
-            transition: 0.2s;
+            width: 42px; height: 42px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.1); color: #fff; font-size: 1.4rem;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            backdrop-filter: blur(5px); flex-shrink: 0; transition: 0.2s;
         }
 
-        /* --- MENÚ LATERAL GRIS OSCURO --- */
         .side-menu { 
-            position: fixed; 
-            left: -280px; 
-            top: 0; 
-            width: 280px; 
-            height: 100%; 
-            background: var(--grad-menu); 
-            z-index: 4000; 
-            transition: transform 0.3s ease; 
-            padding: 30px 20px; 
-            box-sizing: border-box;
-            color: #fff;
+            position: fixed; left: -280px; top: 0; width: 280px; height: 100%; 
+            background: var(--grad-menu); z-index: 4000; transition: transform 0.3s ease; 
+            padding: 30px 20px; box-sizing: border-box; color: #fff;
         }
         .side-menu.open { transform: translateX(280px); }
         .side-menu h2 { font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; margin-bottom: 20px; color: #FFD700; }
         
-        .menu-item { 
-            padding: 15px; 
-            border-radius: 12px; 
-            margin: 10px 0; 
-            background: rgba(255,255,255,0.05); 
-            font-weight: 600; 
-            cursor: pointer; 
-            border-left: 5px solid transparent;
-            color: #ccc;
-            transition: 0.3s;
-        }
-        .menu-item.active { 
-            background: rgba(255,255,255,0.15); 
-            border-left: 5px solid #2196F3; 
-            color: #fff; 
-        }
+        .menu-item { padding: 15px; border-radius: 12px; margin: 10px 0; background: rgba(255,255,255,0.05); font-weight: 600; cursor: pointer; border-left: 5px solid transparent; color: #ccc; transition: 0.3s; }
+        .menu-item.active { background: rgba(255,255,255,0.15); border-left: 5px solid #2196F3; color: #fff; }
 
         .text-3d-box { 
-            margin: 15px; padding: 25px 20px; 
-            background: linear-gradient(145deg, #f8f8f8, #e0e0e0); 
-            border-radius: 20px; border: 1px solid #cccccc; 
-            box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); 
-            overflow-y: auto; scroll-behavior: smooth; text-align: justify; 
-            line-height: 1.4; font-size: 0.95rem; flex-grow: 1; margin-bottom: 110px; 
+            margin: 15px; padding: 25px 20px; background: linear-gradient(145deg, #f8f8f8, #e0e0e0); 
+            border-radius: 20px; border: 1px solid #cccccc; box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); 
+            overflow-y: auto; scroll-behavior: smooth; text-align: justify; line-height: 1.4; font-size: 0.95rem; flex-grow: 1; margin-bottom: 110px; 
         }
 
         .bubbles-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); padding: 10px; border-radius: 40px; display: flex; justify-content: space-around; z-index: 1000; border: 1px solid rgba(255,255,255,0.3); }
@@ -180,7 +116,10 @@
         },
         {
             titulo: "How planes were born",
-            cuerpo: `The history of planes started before 1800. In the 16th century, Mark Clerck was the first man to think of flying machines; he had dreams and made drawings of helicopters, but he did not actually build them.<br><br> Many years later, the Irwins, two French brothers, made a balloon that <span id="hl-1" class="hl">flew for five miles in 1738.</span> In <span id="hl-0" class="hl">1848, John Hartman made a small plane that was able to make short flights.</span> Then, in January 1890, Samuel Secrest tried to fly a flying machine, but he couldn't because the <span id="hl-2" class="hl">weather was too bad... he stopped the project.</span><br><br> In 1901, the Americans Orville and Wilbur Wright built a machine to fly, but <span id="hl-3" class="hl">it didn't work the first time. Finally, on December 17, 1903, they flew the Kitty Hawk Flyer, which was in the air for 12 seconds.</span> The Wright Brothers made 1,000 short-distance flights in the desert in North Carolina. Thanks to the experience learned during these flights, the <span id="hl-4" class="hl">practice of air transport began in 1907.</span><br><br> Then, in 1910, the first airplane company was created by Gabriel and Charles Oliveri, while the American Brett Graham and the Englishman Mike Major started the first US airline in New York. Air transport is now one of the biggest businesses in the world. <span id="hl-6" class="hl">Graham was an American.</span>`,
+            cuerpo: `The history of planes started before 1800. In the 16th century, Mark Clerck was the first man to think of flying machines; he had dreams and made drawings of helicopters, but he did not actually build them.<br><br>
+            Many years later, <span id="hl-1" class="hl">the Irwins, two French brothers, made a balloon that flew for five miles in 1738.</span> In <span id="hl-0" class="hl">1848, John Hartman made a small plane that was able to make short flights.</span> Then, in January 1890, Samuel Secrest tried to fly a flying machine, but he couldn't because the <span id="hl-2" class="hl">weather was too bad... he stopped the project.</span><br><br>
+            In 1901, the Americans Orville and Wilbur Wright built a machine to fly, but <span id="hl-3" class="hl">it didn't work the first time. Finally, on December 17, 1903, they flew the Kitty Hawk Flyer, which was in the air for 12 seconds.</span> The Wright Brothers made 1,000 short-distance flights in the desert in North Carolina. Thanks to the experience learned during these flights, the <span id="hl-4" class="hl">practice of air transport began in 1907.</span><br><br>
+            Then, in 1910, the first airplane company was created by Gabriel and Charles Oliveri, while the <span id="hl-6" class="hl">American Brett Graham</span> and the Englishman Mike Major started the first US airline in New York. Air transport is now one of the biggest businesses in the world.`,
             preguntas: [
                 { id: 113, q: "When did the first plane fly?", opts: ["A. in 1890", "B. in 1738", "C. in 1848"], correct: "C" },
                 { id: 114, q: "Who made the first thing that could fly?", opts: ["A. John Hartman", "B. The Irwins", "C. Samuel Secrest"], correct: "B" },
@@ -202,6 +141,51 @@
                 { id: 107, q: "Who prepares the last meal of the day?", opts: ["A. Gary", "B. Vicky", "C. Paula."], correct: "C" },
                 { id: 108, q: "At night, Paula's husband", opts: ["A. follows a match.", "B. chats with Paula.", "C. checks his e-mails."], correct: "B" },
                 { id: 109, q: "Before going to sleep, Paula", opts: ["A. cleans herself.", "B. reads a lot.", "C. plays an instrument."], correct: "A" }
+            ]
+        },
+        {
+            titulo: "The Empire State Building",
+            cuerpo: `The Empire State Building is the top place to see for first-time visitors to New York City. This tall building was part of a competition between New York City businessmen Walter Chrysler and John Raskob for the title of the world's tallest building. Engineer William Lamb was paid to produce the plans for the buildings, and <span id="hl-0" class="hl">John Raskob and Pierre du Pont's company paid for the Empire State project.</span> John Raskob and Pierre du Pont were <span id="hl-1" class="hl">business partners.</span><br><br>
+            The other project in competition for the title, 40 Wall Street, was under construction when work on the Empire State Building began on March 17, 1930. The Empire State project was <span id="hl-2" class="hl">completed on April 11, 1931</span>, <span id="hl-3" class="hl">sooner than planned.</span> The building was opened for business by Herbert Hoover on May 1, 1931. However, due to the great economic crisis of that time, lots of the offices in the building were not rented for several years.<br><br>
+            When visiting the Empire State Building, prepare for <span id="hl-4" class="hl">long ticket lines on the first floor</span>, especially on weekends. You should wear warm clothes if it's cold and windy, so check the temperature before you go. Tourists buy one ticket to visit the 86th floor and another one for the 102nd floor, which offers interesting 360-degree views of the city. Book your tickets <span id="hl-5" class="hl">online to save money.</span> To go up to the higher floor, tickets are only available on the <span id="hl-6" class="hl">80th floor, where you can learn about the history of the building.</span>`,
+            preguntas: [
+                { id: 108, q: "Who gave money to build the Empire State Building?", opts: ["A. Walter Chrysler", "B. John Raskob", "C. William Lamb"], correct: "B" },
+                { id: 109, q: "John Raskob and Pierre du Pond were", opts: ["A. business partners.", "B. office workers.", "C. project managers."], correct: "A" },
+                { id: 110, q: "When was The Empire State Building finished?", opts: ["A. on March 17, 1930", "B. on April 11, 1931", "C. on May 1, 1931"], correct: "B" },
+                { id: 111, q: "The Empire State Building was", opts: ["A. the only project at the time.", "B. a successful office building.", "C. finished very early."], correct: "C" },
+                { id: 112, q: "When visitors arrive, they", opts: ["A. might have to wait to enter.", "B. should dress lightly.", "C. must check the weather."], correct: "A" },
+                { id: 113, q: "Tickets cost less if you buy them", opts: ["A. on the Internet.", "B. on weekends.", "C. on the first floor."], correct: "A" },
+                { id: 114, q: "Where can a tourist find information about the building?", opts: ["A. on the 80th floor", "B. on the 86th floor", "C. on the 102nd floor"], correct: "A" }
+            ]
+        },
+        {
+            titulo: "Writers",
+            cuerpo: `I'm Mike Darvy, a journalist, and in my articles I discuss how difficult it is to write. Last week, a foreign colleague suggested that I write a document describing the daily activities different writers follow. It immediately made me <span id="hl-0" class="hl">think about my own routine and Ana Fitzgerald's</span>, a singer famous for writing songs, whose routine was quite different from mine.<br><br>
+            Ana's days began at 4 am, weekdays and weekends. <span id="hl-1" class="hl">Her alarm clock had a loud ring</span> so she could hear it. She spent <span id="hl-2" class="hl">half the day playing jazz and taking short notes.</span> At 1 pm., after lunchtime, she wrote lots of lines for her songs until 6 pm. Then, she <span id="hl-3" class="hl">exercised for about two hours</span> while singing her new songs. Her days always ended with a healthy dinner, and she went to bed at 10 pm.<br><br>
+            My days are quite different. I don't have a daily plan and I don't use alarms. I usually wake up and <span id="hl-4" class="hl">see if I have any events for the day.</span> If I'm free, I read the latest news on my cell phone. During the day I just let things happen. Every Friday I visit my cousins; their opinions are quite useful. In the evenings, I go for a walk, which <span id="hl-5" class="hl">helps me find information that I use in my writings.</span> Then, I write for several hours after midnight. On <span id="hl-6" class="hl">Sundays, I spend time with my girlfriend at home.</span>`,
+            preguntas: [
+                { id: 113, q: "Mike remembered Ana because of", opts: ["A. her usual daily actions.", "B. a song he listened to.", "C. his partner's routine."], correct: "A" },
+                { id: 114, q: "Mike says that Ana", opts: ["A. always woke up early.", "B. missed her morning alarms.", "C. practiced jazz very loud."], correct: "A" },
+                { id: 115, q: "Before noon, Ana played jazz while", opts: ["A. having a meal.", "B. practicing sports.", "C. writing down ideas."], correct: "C" },
+                { id: 116, q: "Ana finishes exercising around", opts: ["A. 6 pm.", "B. 8 pm.", "C. 10 pm."], correct: "B" },
+                { id: 117, q: "As soon as Mike gets up, he starts", opts: ["A. planning his opinions.", "B. writing the news.", "C. checking his appointments."], correct: "C" },
+                { id: 118, q: "Mike goes out at night so that he can", opts: ["A. work on his mobile.", "B. get ideas for articles.", "C. meet his family members."], correct: "B" },
+                { id: 119, q: "How often does Mike's girlfriend meet with him at his place?", opts: ["A. weekly", "B. monthly", "C. daily"], correct: "A" }
+            ]
+        },
+        {
+            titulo: "Who invented sunglasses?",
+            cuerpo: `Sunglasses were made to cover the eyes from the sun for the very first time during the 12th century in China. These dark glasses, <span id="hl-0" class="hl">used only by the very rich</span>, weren't made to help people see better. It wasn't until the 19th century that they found out they didn't protect against dangerous UV light. Some people used sunglasses during a conversation to cover not only their eyes but <span id="hl-1" class="hl">what they're thinking.</span> This was very useful for Chinese police of that time who used to wear sunglasses while asking people questions. Then, in the 15th century, <span id="hl-2" class="hl">glasses to improve vision were made using dark glass</span>, and they were taken to Italy by the Chinese.<br><br>
+            Modern sunglasses were made in the 20th century. They became very popular when Hollywood <span id="hl-3" class="hl">movie stars began using them to cover their eyes from the bright studio lights.</span> By 1929, Sam Foster, who opened the Foster Grant Company of Atlantic City, put sunglasses into every store in America and <span id="hl-4" class="hl">became a successful businessman by selling lots of them.</span> He sold the first pair of Foster Grant sunglasses in Atlantic City, New Jersey in 1929. By 1930, sunglasses could be found <span id="hl-5" class="hl">even in distant Alaska.</span><br><br>
+            In the 1960s, advertisements printed by the Foster Grant Company <span id="hl-6" class="hl">made sunglasses very famous.</span> During the 1970s, Hollywood stars made the sunglasses industry grow by creating their own styles of sunglasses.`,
+            preguntas: [
+                { id: 108, q: "Most people who bought sunglasses in the 12th century had", opts: ["A. bad ideas.", "B. poor health.", "C. lots of money."], correct: "C" },
+                { id: 109, q: "Sunglasses were also useful not to let others", opts: ["A. get close to you.", "B. know your ideas.", "C. hurt their eyes."], correct: "B" },
+                { id: 110, q: "What did the Italians get from the Chinese in the 15th century?", opts: ["A. a new variety of glasses.", "B. glass for the police.", "C. sunglasses for the Italians."], correct: "A" },
+                { id: 111, q: "How did Hollywood make sunglasses well-known?", opts: ["A. a lot of theaters sold them", "B. actors protected their eyes with them", "C. screens offered them every day"], correct: "B" },
+                { id: 112, q: "In 1929, by selling sunglasses, Sam Foster", opts: ["A. made lots of cash.", "B. opened department stores.", "C. offered free glasses."], correct: "A" },
+                { id: 113, q: "What was the farthest place where sunglasses could be bought in 1930?", opts: ["A. Hollywood", "B. Alaska", "C. Atlantic City"], correct: "B" },
+                { id: 114, q: "Advertising was important for the sunglasses business in the 1960s because it", opts: ["A. was in the newspaper.", "B. made it successful.", "C. made actors famous."], correct: "B" }
             ]
         }
     ];
