@@ -3,52 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Elite Fixed</title>
+    <title>Saber 11 - Elite v15</title>
     <style>
         :root {
-            --bg-page: #E0E5EC; --paper: #eeeeee;
+            --bg-page: #E0E5EC;
             --c-correct: #27ae60; --c-error: #c0392b;
-            --c-hl1: #FFD700; --c-hl2: #4CAF50; --c-hl3: #2196F3;
-            --c-hl4: #FF9800; --c-hl5: #9C27B0; --c-hl6: #E91E63;
-            --c-hl7: #00BCD4;
+            --grad-0: linear-gradient(135deg, #FFD700, #FF8C00);
+            --grad-1: linear-gradient(135deg, #2196F3, #004a99);
+            --grad-2: linear-gradient(135deg, #9C27B0, #4A148C);
+            --c-hl0: #FFD700; --c-hl1: #4CAF50; --c-hl2: #2196F3;
+            --c-hl3: #FF9800; --c-hl4: #9C27B0; --c-hl5: #E91E63;
+            --c-hl6: #00BCD4;
         }
 
         body { margin: 0; background-color: var(--bg-page); font-family: -apple-system, system-ui, sans-serif; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
-        /* HEADER: Z-index alto para evitar bloqueos */
-        header { position: relative; display: flex; align-items: center; justify-content: center; padding: 10px 15px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); z-index: 3000; height: 60px; box-sizing: border-box; }
-        .hamburger { position: absolute; left: 15px; font-size: 1.8rem; background: none; border: none; color: #333; cursor: pointer; padding: 5px; z-index: 3001; }
-        header h1 { font-size: 0.9rem; margin: 0; font-weight: 800; text-transform: uppercase; text-align: center; max-width: 50%; pointer-events: none; }
-        .nav-group { position: absolute; right: 15px; display: flex; gap: 8px; z-index: 3001; }
-        .nav-btn { background: #fff; border: 1px solid #ddd; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; }
+        /* --- HEADER: FLECHAS PEGADAS AL TITULO --- */
+        header { 
+            position: relative;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; /* Centra todo el grupo */
+            height: 85px; 
+            z-index: 3000; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: background 0.5s ease;
+            padding: 10px 10px 0 10px;
+        }
 
-        .side-menu { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 4000; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); padding: 30px 20px; box-shadow: 10px 0 30px rgba(0,0,0,0.2); box-sizing: border-box; }
+        .hamburger { 
+            position: absolute;
+            top: 8px;
+            left: 15px;
+            font-size: 1.8rem; 
+            background: none; 
+            border: none; 
+            color: #fff; 
+            cursor: pointer;
+            z-index: 3010;
+        }
+
+        /* Grupo central para que las flechas escolten al título */
+        .nav-group-center {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Espacio pequeño entre flechas y título */
+            max-width: 80%;
+        }
+
+        header h1 { 
+            font-size: 0.85rem; 
+            margin: 0; 
+            font-weight: 900; 
+            text-transform: uppercase; 
+            color: #fff;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+
+        .nav-btn { 
+            width: 42px; height: 42px; 
+            border-radius: 50%; 
+            border: 2px solid #fff;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            flex-shrink: 0;
+            transition: 0.2s;
+        }
+        .nav-btn:active { transform: scale(0.9); background: #fff; color: #000; }
+
+        /* --- CONTENIDO --- */
+        .side-menu { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: #fff; z-index: 4000; transition: transform 0.3s ease; padding: 30px 20px; box-sizing: border-box; }
         .side-menu.open { transform: translateX(280px); }
-        .side-menu h2 { font-size: 1.2rem; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
-        .menu-item { padding: 15px; border-radius: 12px; margin: 10px 0; background: #f5f7f9; font-weight: 600; cursor: pointer; border: 1px solid transparent; }
-        .menu-item.active { border-color: var(--c-hl3); background: #eef2f7; }
+        .menu-item { padding: 15px; border-radius: 12px; margin: 10px 0; background: #f5f7f9; font-weight: 600; cursor: pointer; border-left: 5px solid transparent; }
+        .menu-item.active { background: #eef2f7; border-left: 5px solid #2196F3; color: #2196F3; }
 
-        .text-3d-box { margin: 15px; padding: 25px 20px; background: linear-gradient(145deg, #f0f0f0, #e6e6e6); border-radius: 20px; border: 1px solid #cccccc; box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); overflow-y: auto; scroll-behavior: smooth; text-align: justify; line-height: 1.35; font-size: 0.92rem; flex-grow: 1; margin-bottom: 110px; z-index: 1; }
+        .text-3d-box { 
+            margin: 15px; padding: 25px 20px; 
+            background: linear-gradient(145deg, #f8f8f8, #e0e0e0); 
+            border-radius: 20px; border: 1px solid #cccccc; 
+            box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); 
+            overflow-y: auto; scroll-behavior: smooth; text-align: justify; 
+            line-height: 1.4; font-size: 0.95rem; flex-grow: 1; margin-bottom: 110px; 
+        }
 
-        .bubbles-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); padding: 10px; border-radius: 40px; display: flex; justify-content: space-around; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 1000; border: 1px solid rgba(255,255,255,0.3); }
+        .bubbles-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); padding: 10px; border-radius: 40px; display: flex; justify-content: space-around; z-index: 1000; border: 1px solid rgba(255,255,255,0.3); }
         .q-bubble { width: 38px; height: 38px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; border: 2px solid #ddd; transition: 0.3s; }
         .q-bubble.done { color: white !important; background-color: var(--c-correct) !important; }
         .q-bubble.error { color: white !important; background-color: var(--c-error) !important; }
 
         .hl { border-radius: 4px; transition: 0.6s ease; }
-        .hl-active-0 { background: var(--c-hl1); } .hl-active-1 { background: var(--c-hl2); }
-        .hl-active-2 { background: var(--c-hl3); } .hl-active-3 { background: var(--c-hl4); }
-        .hl-active-4 { background: var(--c-hl5); } .hl-active-5 { background: var(--c-hl6); }
-        .hl-active-6 { background: var(--c-hl7); }
+        .hl-active-0 { background: var(--c-hl0); } .hl-active-1 { background: var(--c-hl1); }
+        .hl-active-2 { background: var(--c-hl2); } .hl-active-3 { background: var(--c-hl3); }
+        .hl-active-4 { background: var(--c-hl4); } .hl-active-5 { background: var(--c-hl5); }
+        .hl-active-6 { background: var(--c-hl6); }
 
-        .bottom-sheet { position: fixed; bottom: -100%; left: 0; width: 100%; background: white; border-top-left-radius: 30px; border-top-right-radius: 30px; padding: 25px; box-sizing: border-box; z-index: 5000; transition: bottom 0.4s ease; box-shadow: 0 -10px 40px rgba(0,0,0,0.2); }
+        .bottom-sheet { position: fixed; bottom: -100%; left: 0; width: 100%; background: white; border-radius: 30px 30px 0 0; padding: 25px; box-sizing: border-box; z-index: 5000; transition: bottom 0.4s ease; }
         .bottom-sheet.open { bottom: 0; }
-        .option-btn { width: 100%; padding: 15px; margin: 8px 0; border: 1px solid #eee; border-radius: 12px; background: #f8f9fa; font-weight: 600; text-align: left; color: #000; font-size: 0.95rem; }
+        .option-btn { width: 100%; padding: 15px; margin: 8px 0; border: 1px solid #eee; border-radius: 12px; background: #f8f9fa; font-weight: 600; text-align: left; font-size: 0.95rem; color: #000; }
         .btn-correct { background-color: var(--c-correct) !important; color: white !important; }
         .btn-incorrect { background-color: var(--c-error) !important; color: white !important; }
-        
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); display: none; z-index: 3500; }
-        #toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); padding: 10px 30px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 6000; }
+        #toast { position: fixed; top: 100px; left: 50%; transform: translateX(-50%); padding: 10px 30px; border-radius: 50px; color: white; font-weight: 800; display: none; z-index: 6000; }
     </style>
 </head>
 <body>
@@ -61,11 +123,11 @@
     <div id="menu-list"></div>
 </div>
 
-<header>
+<header id="main-header">
     <button class="hamburger" onclick="toggleMenu()">☰</button>
-    <h1 id="header-title">CARGANDO...</h1>
-    <div class="nav-group">
+    <div class="nav-group-center">
         <button class="nav-btn" onclick="changeText(-1)">‹</button>
+        <h1 id="header-title">CARGANDO...</h1>
         <button class="nav-btn" onclick="changeText(1)">›</button>
     </div>
 </header>
@@ -81,7 +143,8 @@
     const biblioteca = [
         {
             titulo: "Anime and Manga",
-            cuerpo: `Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="hl-0" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="hl-1" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span><br><br> Most Anime movies come from Manga or comics, which means written and drawn stories. During the 1970s, many Anime movies were made from <span id="hl-2" class="hl">Manga written by Osamu Tezuka, an artist well-known for his writings about the future, wonderful machines and amazing adventures.</span><br><br> Here in the West, we believe Anime is about Japanese cartoons, but it's <span id="hl-3" class="hl">actually the word they use in Japan for any kind of video cartoon.</span> El mismo nombre se aplica con Manga, que en Japón se refiere a todos los cómics, pero <span id="hl-4" class="hl">in the West it means Japanese comics.</span> Anime movies are made with the help of computer programs and special teams, while Manga can be written and drawn by a single artist.<br><br> <span id="hl-5" class="hl">International companies rewrite Manga stories from Japanese into other languages and sell them.</span> However, some fans do this before the companies in order to share the stories online for free. More people can read Manga now, but <span id="hl-6" class="hl">some companies say that's a form of stealing.</span>`,
+            color: "var(--grad-0)",
+            cuerpo: `Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="hl-0" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="hl-1" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span><br><br> Most Anime movies come from Manga or comics, which means written and drawn stories. During the 1970s, many Anime movies were made from <span id="hl-2" class="hl">Manga written by Osamu Tezuka, an artist well-known for his writings about the future, wonderful machines and amazing adventures.</span><br><br> Here in the West, we believe Anime is about Japanese cartoons, but it's <span id="hl-3" class="hl">actually the word they use in Japan for any kind of video cartoon.</span> The same happens with Manga, which in Japan refers to all comics everywhere, but <span id="hl-4" class="hl">in the West it means Japanese comics.</span> Anime movies are made with the help of computer programs and special teams, while Manga can be written and drawn by a single artist.<br><br> <span id="hl-5" class="hl">International companies rewrite Manga stories from Japanese into other languages and sell them.</span> However, some fans do this before the companies in order to share the stories online for free. More people can read Manga now, but <span id="hl-6" class="hl">some companies say that's a form of stealing.</span>`,
             preguntas: [
                 { id: 113, q: "Making movies in Japan was difficult because most of the time", opts: ["A. actors were foreign.", "B. places were miles away.", "C. money was not available."], correct: "C" },
                 { id: 114, q: "When making a cartoon, artists drew people who", opts: ["A. looked very different.", "B. acted very well.", "C. lived in usual places."], correct: "A" },
@@ -94,7 +157,8 @@
         },
         {
             titulo: "How planes were born",
-            cuerpo: `The history of planes started before 1800. In the 16th century, Mark Clerck was the first man to think of flying machines; he had dreams and made drawings of helicopters, but he did not actually build them.<br><br> Many years later, <span id="hl-1" class="hl">the Irwins, two French brothers, made a balloon that flew for five miles in 1738.</span> In <span id="hl-0" class="hl">1848, John Hartman made a small plane that was able to make short flights.</span> Then, in January 1890, Samuel Secrest tried to fly a flying machine, but he couldn't because the <span id="hl-2" class="hl">weather was too bad... he stopped the project.</span><br><br> In 1901, the Americans Orville and Wilbur Wright built a machine to fly, but <span id="hl-3" class="hl">it didn't work the first time. Finally... they started the air age.</span> On December 17, 1903, <span id="hl-5" class="hl">they flew the Kitty Hawk Flyer, which was in the air for 12 seconds.</span> El Wright Brothers made 1,000 short-distance flights... Thanks to the experience learned, the <span id="hl-4" class="hl">practice of air transport began in 1907.</span><br><br> Then, in 1910, the first airplane company was created by Gabriel and Charles Oliveri, while the <span id="hl-6" class="hl">American Brett Graham</span> and the Englishman Mike Major started the first US airline in New York. Air transport is now one of the biggest businesses in the world.`,
+            color: "var(--grad-1)",
+            cuerpo: `The history of planes started before 1800. In the 16th century, Mark Clerck was the first man to think of flying machines; he had dreams and made drawings of helicopters, but he did not actually build them.<br><br> Many years later, the Irwins, two French brothers, made a balloon that <span id="hl-1" class="hl">flew for five miles in 1738.</span> In <span id="hl-0" class="hl">1848, John Hartman made a small plane that was able to make short flights.</span> Then, in January 1890, Samuel Secrest tried to fly a flying machine, but he couldn't because the <span id="hl-2" class="hl">weather was too bad... he stopped the project.</span><br><br> In 1901, the Americans Orville and Wilbur Wright built a machine to fly, but <span id="hl-3" class="hl">it didn't work the first time. Finally, on December 17, 1903, they flew the Kitty Hawk Flyer, which was in the air for 12 seconds.</span> The Wright Brothers made 1,000 short-distance flights in the desert in North Carolina. Thanks to the experience learned during these flights, the <span id="hl-4" class="hl">practice of air transport began in 1907.</span><br><br> Then, in 1910, the first airplane company was created by Gabriel and Charles Oliveri, while the American Brett Graham and the Englishman Mike Major started the first US airline in New York. Air transport is now one of the biggest businesses in the world. <span id="hl-6" class="hl">Graham was an American.</span>`,
             preguntas: [
                 { id: 113, q: "When did the first plane fly?", opts: ["A. in 1890", "B. in 1738", "C. in 1848"], correct: "C" },
                 { id: 114, q: "Who made the first thing that could fly?", opts: ["A. John Hartman", "B. The Irwins", "C. Samuel Secrest"], correct: "B" },
@@ -107,14 +171,8 @@
         },
         {
             titulo: "Paula Radcliffe's day",
-            cuerpo: `I'm an English runner who has won the world marathon six times. I also won four marathons in the USA and three in London. These are the activities I do when I'm not in a competition:<br><br>
-            8.30 am - <span id="hl-0" class="hl">My daughter Vicky comes to our room before we wake up and says good morning to Gary and me.</span> Later, I eat some melon and give cereal to her. Then, I have a look at the newspaper.<br><br>
-            9.45 am - We leave Vicky at her theatre class; then, I run and <span id="hl-1" class="hl">Gary cycles next to me to keep me close to my time goal.</span> I sometimes surf after this.<br><br>
-            12.30 pm - <span id="hl-2" class="hl">After meeting Vicky at school, we get home</span> and have a big lunch. Then, I play with her.<br><br>
-            2.10 pm - Gary usually takes Vicky out while <span id="hl-3" class="hl">I sleep.</span> When I get up, I boil some water for tea.<br><br>
-            7.30 pm - In the evening, Gary gives Vicky tea while I finish doing my exercises. Afterwards, <span id="hl-4" class="hl">I cook dinner</span> while Gary gives Vicky a bath.<br><br>
-            8.20 pm - Vicky goes to bed. I read my friends' messages on the computer, watch volleyball on TV, and <span id="hl-5" class="hl">have a conversation with Gary.</span><br><br>
-            10.30 pm - Time for bed. <span id="hl-6" class="hl">I brush my teeth and wash my hands and face.</span> I enjoy reading, but I haven't done it much since Vicky was born. I also wish I had time for playing the drums, but it would wake Vicky up.`,
+            color: "var(--grad-2)",
+            cuerpo: `I'm an English runner who has won the world marathon six times. I also won four marathons in the USA and three in London. These are the activities I do when I'm not in a competition:<br><br> 8.30 am - <span id="hl-0" class="hl">My daughter Vicky comes to our room before we wake up and says good morning to Gary and me.</span> Later, I eat some melon and give cereal to her. Then, I have a look at the newspaper.<br><br> 9.45 am - We leave Vicky at her theatre class; then, I run and <span id="hl-1" class="hl">Gary cycles next to me to keep me close to my time goal.</span> I sometimes surf after this.<br><br> 12.30 pm - <span id="hl-2" class="hl">After meeting Vicky at school, we get home and have a big lunch.</span> Then, I play with her.<br><br> 2.10 pm - Gary usually takes Vicky out while <span id="hl-3" class="hl">I sleep.</span> When I get up, I boil some water for tea.<br><br> 7.30 pm - In the evening, Gary gives Vicky tea while I finish doing my exercises. Afterwards, <span id="hl-4" class="hl">I cook dinner</span> while Gary gives Vicky a bath. <br><br> 8.20 pm - Vicky goes to bed. I read my friends' messages on the computer, watch volleyball on TV, and <span id="hl-5" class="hl">have a conversation with Gary.</span><br><br> 10.30 pm - Time for bed. <span id="hl-6" class="hl">I brush my teeth and wash my hands and face.</span> I enjoy reading, but I haven't done it much since Vicky was born.`,
             preguntas: [
                 { id: 103, q: "In the morning, Vicky goes to her parents' room to", opts: ["A. have a snack.", "B. give them the paper.", "C. say hello to them."], correct: "C" },
                 { id: 104, q: "While Paula has her sports practice, Gary", opts: ["A. goes surfing.", "B. rides his bicycle.", "C. takes an acting class."], correct: "B" },
@@ -128,23 +186,11 @@
     ];
 
     let currentIdx = 0;
-    let audioCtx = null; // Se inicializará tras la primera interacción
+    let audioCtx = null;
 
     const AudioEngine = (() => {
-        const initAudio = () => {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-        };
-
-        const play = (freq, type, decay, vol) => {
-            initAudio();
-            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + decay);
-        };
+        const init = () => { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); };
+        const play = (freq, type, decay, vol) => { init(); const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime); gain.gain.setValueAtTime(vol, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + decay); };
         return {
             click: () => play(600, 'sine', 0.1, 0.4),
             correct: () => { play(500, 'sine', 0.2, 0.6); setTimeout(() => play(800, 'sine', 0.4, 0.6), 100); },
@@ -155,6 +201,7 @@
     function renderApp() {
         const t = biblioteca[currentIdx];
         document.getElementById('header-title').innerText = t.titulo;
+        document.getElementById('main-header').style.background = t.color;
         document.getElementById('scroll-box').innerHTML = t.cuerpo;
         document.getElementById('scroll-box').scrollTop = 0;
         document.getElementById('bubbles-container').innerHTML = t.preguntas.map((p, i) => `<div class="q-bubble" id="bubble-${i}" onclick="openSheet(${i})">${p.id}</div>`).join('');
@@ -163,17 +210,7 @@
 
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').style.display = 'block'; }
     function closeAll() { document.getElementById('side-menu').classList.remove('open'); document.getElementById('sheet').classList.remove('open'); document.getElementById('overlay').style.display = 'none'; }
-    
-    function openSheet(index) {
-        AudioEngine.click();
-        if (navigator.vibrate) navigator.vibrate(15);
-        const p = biblioteca[currentIdx].preguntas[index];
-        const content = document.getElementById('sheet-content');
-        content.innerHTML = `<p style="font-weight:800; margin-bottom:15px; color:#000;">${p.q}</p>
-            ${p.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`;
-        document.getElementById('sheet').classList.add('open');
-        document.getElementById('overlay').style.display = 'block';
-    }
+    function openSheet(index) { AudioEngine.click(); if (navigator.vibrate) navigator.vibrate(15); const p = biblioteca[currentIdx].preguntas[index]; const content = document.getElementById('sheet-content'); content.innerHTML = `<p style="font-weight:800; margin-bottom:15px; color:#000;">${p.q}</p>${p.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`; document.getElementById('sheet').classList.add('open'); document.getElementById('overlay').style.display = 'block'; }
 
     function verify(choice, btn, qIdx) {
         const p = biblioteca[currentIdx].preguntas[qIdx];
@@ -182,12 +219,12 @@
         const hlElem = document.getElementById(`hl-${qIdx}`);
         if (isCorrect) {
             btn.classList.add('btn-correct'); showToast("Melo", "#27ae60");
-            bubble.classList.add('done'); bubble.style.borderColor = `var(--c-hl${qIdx+1})`;
+            bubble.classList.add('done'); 
+            bubble.style.borderColor = `var(--c-hl${qIdx})`; 
             AudioEngine.correct(); if (navigator.vibrate) navigator.vibrate(60);
         } else {
             btn.classList.add('btn-incorrect'); showToast("Nel, pilas", "#c0392b");
-            bubble.classList.add('error'); AudioEngine.incorrect();
-            if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
+            bubble.classList.add('error'); AudioEngine.incorrect(); if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
         }
         if(hlElem) {
             hlElem.classList.add(`hl-active-${qIdx}`);
@@ -196,15 +233,9 @@
         setTimeout(closeAll, 1200);
     }
 
-    function showToast(txt, color) {
-        const t = document.getElementById('toast'); t.innerText = txt; t.style.background = color; t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 1400);
-    }
-
+    function showToast(txt, color) { const t = document.getElementById('toast'); t.innerText = txt; t.style.background = color; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 1400); }
     function changeText(dir) { let newIdx = currentIdx + dir; if(newIdx >= 0 && newIdx < biblioteca.length) loadText(newIdx); }
     function loadText(id) { currentIdx = id; renderApp(); closeAll(); }
-    
-    // Al cargar la ventana, renderizamos
     window.onload = renderApp;
 </script>
 </body>
