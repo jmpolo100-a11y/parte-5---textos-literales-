@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Elite v18.11</title>
+    <title>Saber 11 - Elite v18.14</title>
     <style>
         :root {
             --bg-page: #E0E5EC;
@@ -48,9 +48,13 @@
         .menu-item.active { background: rgba(255,255,255,0.15); border-left: 5px solid #2196F3; color: #fff; }
 
         .text-3d-box { 
-            margin: 15px; padding: 25px 20px; background: linear-gradient(145deg, #f8f8f8, #e0e0e0); 
-            border-radius: 20px; border: 1px solid #cccccc; box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); 
-            overflow-y: auto; scroll-behavior: smooth; text-align: justify; line-height: 1.4; font-size: 0.95rem; flex-grow: 1; margin-bottom: 110px; 
+            margin: 15px; padding: 25px 20px 150px 20px; 
+            background: linear-gradient(145deg, #f8f8f8, #e0e0e0); 
+            border-radius: 20px; border: 1px solid #cccccc; 
+            box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); 
+            overflow-y: auto; scroll-behavior: smooth; text-align: justify; 
+            line-height: 1.4; font-size: 0.95rem; flex-grow: 1; 
+            -webkit-overflow-scrolling: touch;
         }
 
         .bubbles-footer { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 450px; background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(15px); padding: 10px; border-radius: 40px; display: flex; justify-content: space-around; z-index: 1000; border: 1px solid rgba(255,255,255,0.3); }
@@ -191,6 +195,22 @@
                 { id: 111, q: "Some Incas were good at", opts: ["A. baking cakes.", "B. designing buildings.", "C. writing literature."], correct: "B" },
                 { id: 112, q: "Machu Picchu made Incas feel", opts: ["A. pleased.", "B. clever.", "C. excited."], correct: "A" }
             ]
+        },
+        {
+            titulo: "Nickelodeons",
+            cuerpo: `Many people believe that Vaudeville Houses, which first opened their doors in the 1880s, were the first movie theaters in the USA. But these theatres only showed short films for 10 cents, as part of their program of music, comedy and magic acts. The <span id="hl-0" class="hl">first theaters to show only movies were the Nickelodeons</span> that opened in 1905. It only <span id="hl-1" class="hl">cost five cents to go to one of these theaters</span>, so more people could afford to go.<br><br>
+            By 1908 there were 8,000 Nickelodeons across North America. As they became more popular, the film industry became more successful. As a result, <span id="hl-2" class="hl">longer films were made showing well-known film stars.</span> The films were still silent, but while people were watching these movies, they could <span id="hl-3" class="hl">listen to a unique show of drums and a piano.</span> Going to see one of these longer movies cost 15 cents, which was a lot for that time.<br><br>
+            By 1907, over two million Americans were visiting Nickelodeons every week, but the theaters were quite small and not very comfortable. In <span id="hl-4" class="hl">1910, a new kind of movie theatre, called The Deluxe, was opened.</span> These theaters showed complete films in <span id="hl-5" class="hl">much larger buildings</span>, which had bigger screens. By 1920, Nickelodeons were a thing of the past.<br><br>
+            Nickelodeons were only around for a short period, but they were really important in film history. These theaters <span id="hl-6" class="hl">made going to see a film a part of people's lives in the USA.</span>`,
+            preguntas: [
+                { id: 113, q: "What could people see at a Nickelodeon?", opts: ["A. movies", "B. musicals", "C. comedy acts"], correct: "A" },
+                { id: 114, q: "Nickelodeons had more customers than Vaudeville houses because Nickelodeons", opts: ["A. opened first.", "B. cost much less.", "C. had extra shows."], correct: "B" },
+                { id: 115, q: "Thanks to the success of Nickelodeons", opts: ["A. musicals were included.", "B. silent films became longer.", "C. more famous actors visited."], correct: "B" },
+                { id: 116, q: "After 1908, seeing films at Nickelodeons was special because", opts: ["A. various acts were added.", "B. cheaper tickets were offered.", "C. musical instruments were used."], correct: "C" },
+                { id: 117, q: "When did a new type of theater appear?", opts: ["A. in 1907", "B. in 1910", "C. in 1920"], correct: "B" },
+                { id: 118, q: "Deluxe theaters were preferred because they", opts: ["A. were larger.", "B. had more buildings.", "C. showed American movies."], correct: "A" },
+                { id: 119, q: "Nickelodeons were important because they", opts: ["A. had big theaters.", "B. grew fast in the USA.", "C. affected the lives of Americans."], correct: "C" }
+            ]
         }
     ];
 
@@ -218,7 +238,22 @@
 
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').style.display = 'block'; }
     function closeAll() { document.getElementById('side-menu').classList.remove('open'); document.getElementById('sheet').classList.remove('open'); document.getElementById('overlay').style.display = 'none'; }
-    function openSheet(index) { AudioEngine.click(); if (navigator.vibrate) navigator.vibrate(15); const p = biblioteca[currentIdx].preguntas[index]; const content = document.getElementById('sheet-content'); content.innerHTML = `<p style="font-weight:800; margin-bottom:15px; color:#000;">${p.q}</p>${p.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`; document.getElementById('sheet').classList.add('open'); document.getElementById('overlay').style.display = 'block'; }
+    
+    function openSheet(index) { 
+        AudioEngine.click(); 
+        if (navigator.vibrate) navigator.vibrate(15); 
+        const p = biblioteca[currentIdx].preguntas[index]; 
+        const content = document.getElementById('sheet-content'); 
+        
+        // CORRECCIÓN: Renderizar preguntas y opciones correctamente
+        content.innerHTML = `
+            <p style="font-weight:800; margin-bottom:15px; color:#000;">${p.q}</p>
+            ${p.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}
+        `; 
+        
+        document.getElementById('sheet').classList.add('open'); 
+        document.getElementById('overlay').style.display = 'block'; 
+    }
 
     function verify(choice, btn, qIdx) {
         const p = biblioteca[currentIdx].preguntas[qIdx];
@@ -227,8 +262,7 @@
         const hlElem = document.getElementById(`hl-${qIdx}`);
         if (isCorrect) {
             btn.classList.add('btn-correct'); showToast("Melo", "#27ae60");
-            bubble.classList.add('done'); 
-            bubble.style.borderColor = `var(--c-hl${qIdx})`; 
+            bubble.classList.add('done'); bubble.style.borderColor = `var(--c-hl${qIdx})`; 
             AudioEngine.correct(); if (navigator.vibrate) navigator.vibrate(60);
         } else {
             btn.classList.add('btn-incorrect'); showToast("Yaper", "#c0392b");
@@ -240,7 +274,6 @@
         }
         setTimeout(closeAll, 1200);
     }
-
     function showToast(txt, color) { const t = document.getElementById('toast'); t.innerText = txt; t.style.background = color; t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 1400); }
     function changeText(dir) { let newIdx = currentIdx + dir; if(newIdx >= 0 && newIdx < biblioteca.length) loadText(newIdx); }
     function loadText(id) { currentIdx = id; renderApp(); closeAll(); }
