@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Elite v18.14</title>
+    <title>Saber 11 - Elite v18.21</title>
     <style>
         :root {
             --bg-page: #E0E5EC;
@@ -36,19 +36,30 @@
             backdrop-filter: blur(5px); flex-shrink: 0; transition: 0.2s;
         }
 
+        /* MENU LATERAL ACTUALIZADO */
         .side-menu { 
             position: fixed; left: -280px; top: 0; width: 280px; height: 100%; 
             background: var(--grad-menu); z-index: 4000; transition: transform 0.3s ease; 
-            padding: 30px 20px; box-sizing: border-box; color: #fff;
+            padding: 0 20px 30px 20px; box-sizing: border-box; color: #fff;
+            overflow-y: auto; 
         }
         .side-menu.open { transform: translateX(280px); }
-        .side-menu h2 { font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; margin-bottom: 20px; color: #FFD700; }
         
+        /* Título Centrado y con Fondo para el Scroll */
+        .side-menu h2 { 
+            font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.2); 
+            padding: 30px 0 15px 0; margin: 0; color: #FFD700; 
+            text-align: center; position: sticky; top: 0; 
+            background: #2b2b2b; z-index: 10; width: 100%;
+        }
+        
+        .menu-list-container { padding-top: 15px; }
+
         .menu-item { padding: 15px; border-radius: 12px; margin: 10px 0; background: rgba(255,255,255,0.05); font-weight: 600; cursor: pointer; border-left: 5px solid transparent; color: #ccc; transition: 0.3s; }
         .menu-item.active { background: rgba(255,255,255,0.15); border-left: 5px solid #2196F3; color: #fff; }
 
         .text-3d-box { 
-            margin: 15px; padding: 25px 20px 150px 20px; 
+            margin: 15px; padding: 25px 20px 160px 20px; 
             background: linear-gradient(145deg, #f8f8f8, #e0e0e0); 
             border-radius: 20px; border: 1px solid #cccccc; 
             box-shadow: 10px 10px 20px rgba(163,177,198,0.4), -10px -10px 20px rgba(255,255,255, 0.5); 
@@ -84,7 +95,7 @@
 
 <div class="side-menu" id="side-menu">
     <h2>BIBLIOTECA</h2>
-    <div id="menu-list"></div>
+    <div id="menu-list" class="menu-list-container"></div>
 </div>
 
 <header id="main-header">
@@ -105,6 +116,7 @@
 
 <script>
     const biblioteca = [
+        /* Anime, Planes, Paula, Empire, Writers, Sunglasses, Machu Picchu, Nickelodeons, Evelyn Smith integrados */
         {
             titulo: "Anime and Manga",
             cuerpo: `Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="hl-0" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="hl-1" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span><br><br> Most Anime movies come from Manga or comics, which means written and drawn stories. During the 1970s, many Anime movies were made from <span id="hl-2" class="hl">Manga written by Osamu Tezuka, an artist well-known for his writings about the future, wonderful machines and amazing adventures.</span><br><br> Here in the West, we believe Anime is about Japanese cartoons, but it's <span id="hl-3" class="hl">actually the word they use in Japan for any kind of video cartoon.</span> The same happens with Manga, which in Japan refers to all comics everywhere, but <span id="hl-4" class="hl">in the West it means Japanese comics.</span> Anime movies are made with the help of computer programs and special teams, while Manga can be written and drawn by a single artist.<br><br> <span id="hl-5" class="hl">International companies rewrite Manga stories from Japanese into other languages and sell them.</span> However, some fans do this before the companies in order to share the stories online for free. More people can read Manga now, but <span id="hl-6" class="hl">some companies say that's a form of stealing.</span>`,
@@ -198,10 +210,7 @@
         },
         {
             titulo: "Nickelodeons",
-            cuerpo: `Many people believe that Vaudeville Houses, which first opened their doors in the 1880s, were the first movie theaters in the USA. But these theatres only showed short films for 10 cents, as part of their program of music, comedy and magic acts. The <span id="hl-0" class="hl">first theaters to show only movies were the Nickelodeons</span> that opened in 1905. It only <span id="hl-1" class="hl">cost five cents to go to one of these theaters</span>, so more people could afford to go.<br><br>
-            By 1908 there were 8,000 Nickelodeons across North America. As they became more popular, the film industry became more successful. As a result, <span id="hl-2" class="hl">longer films were made showing well-known film stars.</span> The films were still silent, but while people were watching these movies, they could <span id="hl-3" class="hl">listen to a unique show of drums and a piano.</span> Going to see one of these longer movies cost 15 cents, which was a lot for that time.<br><br>
-            By 1907, over two million Americans were visiting Nickelodeons every week, but the theaters were quite small and not very comfortable. In <span id="hl-4" class="hl">1910, a new kind of movie theatre, called The Deluxe, was opened.</span> These theaters showed complete films in <span id="hl-5" class="hl">much larger buildings</span>, which had bigger screens. By 1920, Nickelodeons were a thing of the past.<br><br>
-            Nickelodeons were only around for a short period, but they were really important in film history. These theaters <span id="hl-6" class="hl">made going to see a film a part of people's lives in the USA.</span>`,
+            cuerpo: `Many people believe that Vaudeville Houses, which first opened their doors in the 1880s, were the first movie theaters in the USA. But these theatres only showed short films for 10 cents, as part of their program of music, comedy and magic acts. The <span id="hl-0" class="hl">first theaters to show only movies were the Nickelodeons</span> that opened in 1905. It only <span id="hl-1" class="hl">cost five cents to go to one of these theaters</span>, so more people could afford to go.<br><br> By 1908 there were 8,000 Nickelodeons across North America. As they became more popular, the film industry became more successful. As a result, <span id="hl-2" class="hl">longer films were made showing well-known film stars.</span> The films were still silent, but while people were watching these movies, they could <span id="hl-3" class="hl">listen to a unique show of drums and a piano.</span> Going to see one of these longer movies cost 15 cents, which was a lot for that time.<br><br> By 1907, over two million Americans were visiting Nickelodeons every week, but the theaters were quite small and not very comfortable. In <span id="hl-4" class="hl">1910, a new kind of movie theatre, called The Deluxe, was opened.</span> These theaters showed complete films in <span id="hl-5" class="hl">much larger buildings</span>, which had bigger screens. By 1920, Nickelodeons were a thing of the past.<br><br> Nickelodeons were only around for a short period, but they were really important in film history. These theaters <span id="hl-6" class="hl">made going to see a film a part of people's lives in the USA.</span>`,
             preguntas: [
                 { id: 113, q: "What could people see at a Nickelodeon?", opts: ["A. movies", "B. musicals", "C. comedy acts"], correct: "A" },
                 { id: 114, q: "Nickelodeons had more customers than Vaudeville houses because Nickelodeons", opts: ["A. opened first.", "B. cost much less.", "C. had extra shows."], correct: "B" },
@@ -211,12 +220,24 @@
                 { id: 118, q: "Deluxe theaters were preferred because they", opts: ["A. were larger.", "B. had more buildings.", "C. showed American movies."], correct: "A" },
                 { id: 119, q: "Nickelodeons were important because they", opts: ["A. had big theaters.", "B. grew fast in the USA.", "C. affected the lives of Americans."], correct: "C" }
             ]
+        },
+        {
+            titulo: "Evelyn Smith",
+            cuerpo: `Evelyn Smith was a pilot. Her father, David, had an important company in Kansas, USA, where she was born. They later <span id="hl-0" class="hl">moved to Texas</span> with her Californian mother, and there Evelyn grew up with her younger sister, Helen, who became a painter and also wrote for a newspaper there. Evelyn got interested in airplanes there when she was 20. Her <span id="hl-1" class="hl">uncle Jim, who was a mechanic, took her to a fair.</span> They both got on an airplane and he flew it while she was <span id="hl-2" class="hl">sitting next to him.</span> That's when she first knew she wanted to learn to fly!<br><br> Evelyn later traveled to Toronto, Canada, where she <span id="hl-3" class="hl">helped sell medicines</span> for sick people. In 1919, she returned to the USA and got into medical school in Philadelphia. Then, she moved to <span id="hl-4" class="hl">Sacramento, where she learned how to fly</span>, along with her cousin, who sang and played popular music. During their training, Evelyn once saw a plane catch fire, but she wasn't frightened.<br><br> In 1922, Evelyn bought an airplane thanks to some money that her <span id="hl-5" class="hl">father lent her.</span> Two years later, she moved to Pasadena, where her best friend helped her find a job. During this time, she was able to keep flying as a hobby.<br><br> In May 1932, Evelyn flew from Hampton, USA, and after many hours she arrived in England, becoming the second woman to fly across the ocean.`,
+            preguntas: [
+                { id: 113, q: "Where did Evelyn live when she was a teenager?", opts: ["A. in Kansas", "B. in California", "C. in Texas"], correct: "C" },
+                { id: 114, q: "Her first contact with planes happened thanks to", opts: ["A. David.", "B. Helen.", "C. Jim."], correct: "C" },
+                { id: 115, q: "The first time Evelyn got on a plane, she was the", opts: ["A. pilot.", "B. passenger.", "C. mechanic."], correct: "B" },
+                { id: 116, q: "What occupation did she have while being in a foreign country?", opts: ["A. pharmacist", "B. student", "C. musician"], correct: "A" },
+                { id: 117, q: "Where was she taught to fly a plane?", opts: ["A. in Philadelphia", "B. in Toronto", "C. in Sacramento"], correct: "C" },
+                { id: 118, q: "To get her plane, she borrowed cash from one of her", opts: ["A. parents.", "B. friends.", "C. cousins."], correct: "A" },
+                { id: 119, q: "Based on the text, Evelyn's life was full of", opts: ["A. adventure.", "B. accidents.", "C. art."], correct: "A" }
+            ]
         }
     ];
 
     let currentIdx = 0;
     let audioCtx = null;
-
     const AudioEngine = (() => {
         const init = () => { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); };
         const play = (freq, type, decay, vol) => { init(); const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = type; osc.frequency.setValueAtTime(freq, audioCtx.currentTime); gain.gain.setValueAtTime(vol, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + decay); };
@@ -238,22 +259,7 @@
 
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('open'); document.getElementById('overlay').style.display = 'block'; }
     function closeAll() { document.getElementById('side-menu').classList.remove('open'); document.getElementById('sheet').classList.remove('open'); document.getElementById('overlay').style.display = 'none'; }
-    
-    function openSheet(index) { 
-        AudioEngine.click(); 
-        if (navigator.vibrate) navigator.vibrate(15); 
-        const p = biblioteca[currentIdx].preguntas[index]; 
-        const content = document.getElementById('sheet-content'); 
-        
-        // CORRECCIÓN: Renderizar preguntas y opciones correctamente
-        content.innerHTML = `
-            <p style="font-weight:800; margin-bottom:15px; color:#000;">${p.q}</p>
-            ${p.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}
-        `; 
-        
-        document.getElementById('sheet').classList.add('open'); 
-        document.getElementById('overlay').style.display = 'block'; 
-    }
+    function openSheet(index) { AudioEngine.click(); if (navigator.vibrate) navigator.vibrate(15); const p = biblioteca[currentIdx].preguntas[index]; const content = document.getElementById('sheet-content'); content.innerHTML = `<p style="font-weight:800; margin-bottom:15px; color:#000;">${p.q}</p>${p.opts.map(opt => `<button class="option-btn" onclick="verify('${opt[0]}', this, ${index})">${opt}</button>`).join('')}`; document.getElementById('sheet').classList.add('open'); document.getElementById('overlay').style.display = 'block'; }
 
     function verify(choice, btn, qIdx) {
         const p = biblioteca[currentIdx].preguntas[qIdx];
