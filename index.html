@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saber 11 - Elite v18.21</title>
+    <title>Saber 11 - Elite v18.23</title>
     <style>
         :root {
             --bg-page: #E0E5EC;
@@ -36,7 +36,6 @@
             backdrop-filter: blur(5px); flex-shrink: 0; transition: 0.2s;
         }
 
-        /* MENU LATERAL ACTUALIZADO */
         .side-menu { 
             position: fixed; left: -280px; top: 0; width: 280px; height: 100%; 
             background: var(--grad-menu); z-index: 4000; transition: transform 0.3s ease; 
@@ -45,7 +44,6 @@
         }
         .side-menu.open { transform: translateX(280px); }
         
-        /* Título Centrado y con Fondo para el Scroll */
         .side-menu h2 { 
             font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.2); 
             padding: 30px 0 15px 0; margin: 0; color: #FFD700; 
@@ -116,7 +114,6 @@
 
 <script>
     const biblioteca = [
-        /* Anime, Planes, Paula, Empire, Writers, Sunglasses, Machu Picchu, Nickelodeons, Evelyn Smith integrados */
         {
             titulo: "Anime and Manga",
             cuerpo: `Anime is a Japanese video cartoon that began when Japan tried to make movies in the Western way. <span id="hl-0" class="hl">To make these "Western" movies, the money was not enough, places were difficult to film, and Japanese actors looked different from other people in the world.</span> So, <span id="hl-1" class="hl">directors preferred cartoons and asked artists to draw villages or people not found in other movies; for example, they started making people with big heads, lots of hair and colorful eyes.</span><br><br> Most Anime movies come from Manga or comics, which means written and drawn stories. During the 1970s, many Anime movies were made from <span id="hl-2" class="hl">Manga written by Osamu Tezuka, an artist well-known for his writings about the future, wonderful machines and amazing adventures.</span><br><br> Here in the West, we believe Anime is about Japanese cartoons, but it's <span id="hl-3" class="hl">actually the word they use in Japan for any kind of video cartoon.</span> The same happens with Manga, which in Japan refers to all comics everywhere, but <span id="hl-4" class="hl">in the West it means Japanese comics.</span> Anime movies are made with the help of computer programs and special teams, while Manga can be written and drawn by a single artist.<br><br> <span id="hl-5" class="hl">International companies rewrite Manga stories from Japanese into other languages and sell them.</span> However, some fans do this before the companies in order to share the stories online for free. More people can read Manga now, but <span id="hl-6" class="hl">some companies say that's a form of stealing.</span>`,
@@ -145,7 +142,7 @@
         },
         {
             titulo: "Paula Radcliffe's day",
-            cuerpo: `I'm an English runner who has won the world marathon six times. I also won four marathons in the USA and three in London. These are the activities I do when I'm not in a competition:<br><br> 8.30 am - <span id="hl-0" class="hl">My daughter Vicky comes to our room before we wake up and says good morning to Gary and me.</span> Later, I eat some melon and give cereal to her. Then, I have a look at the newspaper.<br><br> 9.45 am - We leave Vicky at her theatre class; then, I run and <span id="hl-1" class="hl">Gary cycles next to me to keep me close to my time goal.</span> I sometimes surf after this.<br><br> 12.30 pm - <span id="hl-2" class="hl">After meeting Vicky at school, we get home and have a big lunch.</span> Then, I play with her.<br><br> 2.10 pm - Gary usually takes Vicky out while <span id="hl-3" class="hl">I sleep.</span> When I get up, I boil some water for tea.<br><br> 7.30 pm - In the evening, Gary gives Vicky tea while I finish doing my exercises. Afterwards, <span id="hl-4" class="hl">I cook dinner</span> mientras Gary baña a Vicky.<br><br> 8.20 pm - Vicky goes to bed. I read my friends' messages on the computer, watch volleyball on TV, and <span id="hl-5" class="hl">have a conversation with Gary.</span><br><br> 10.30 pm - Time for bed. <span id="hl-6" class="hl">I brush my teeth and wash my hands and face.</span> I enjoy reading, but I haven't done it much since Vicky was born.`,
+            cuerpo: `I'm an English runner who has won the world marathon six times. I also won four marathons in the USA and three in London. These are the activities I do when I'm not in a competition:<br><br> 8.30 am - <span id="hl-0" class="hl">My daughter Vicky comes to our room before we wake up and says good morning to Gary and me.</span> Later, I eat some melon and give cereal to her. Then, I have a look at the newspaper.<br><br> 9.45 am - We leave Vicky at her theatre class; then, I run and <span id="hl-1" class="hl">Gary cycles next to me to keep me close to my time goal.</span> I sometimes surf after this.<br><br> 12.30 pm - <span id="hl-2" class="hl">After meeting Vicky at school, we get home and have a big lunch.</span> Then, I play with her.<br><br> 2.10 pm - Gary usually takes Vicky out while <span id="hl-3" class="hl">I sleep.</span> When I get up, I boil some water for tea.<br><br> 7.30 pm - In the evening, Gary gives Vicky tea while I finish doing my exercises. Afterwards, <span id="hl-4" class="hl">I cook dinner</span> while Gary bathes Vicky.<br><br> 8.20 pm - Vicky goes to bed. I read my friends' messages on the computer, watch volleyball on TV, and <span id="hl-5" class="hl">have a conversation with Gary.</span><br><br> 10.30 pm - Time for bed. <span id="hl-6" class="hl">I brush my teeth and wash my hands and face.</span> I enjoy reading, but I haven't done it much since Vicky was born.`,
             preguntas: [
                 { id: 103, q: "In the morning, Vicky goes to her parents' room to", opts: ["A. have a snack.", "B. give them the paper.", "C. say hello to them."], correct: "C" },
                 { id: 104, q: "While Paula has her sports practice, Gary", opts: ["A. goes surfing.", "B. rides his bicycle.", "C. takes an acting class."], correct: "B" },
@@ -178,7 +175,7 @@
                 { id: 115, q: "Before noon, Ana played jazz while", opts: ["A. having a meal.", "B. practicing sports.", "C. writing down ideas."], correct: "C" },
                 { id: 116, q: "Ana finishes exercising around", opts: ["A. 6 pm.", "B. 8 pm.", "C. 10 pm."], correct: "B" },
                 { id: 117, q: "As soon as Mike gets up, he starts", opts: ["A. planning his opinions.", "B. writing the news.", "C. checking his appointments."], correct: "C" },
-                { id: 118, q: "Mike goes out at night so that he can", opts: ["A. work on his mobile.", "B. get ideas for articles.", "C. meet his family members."], correct: "B" },
+                { id: 118, q: "Mike goes out at night so that he can", opts: ["A. get ideas for articles.", "B. meet his family members.", "C. meet his family members."], correct: "B" },
                 { id: 119, q: "How often does Mike's girlfriend meet with him at his place?", opts: ["A. weekly", "B. monthly", "C. daily"], correct: "A" }
             ]
         },
@@ -232,6 +229,21 @@
                 { id: 117, q: "Where was she taught to fly a plane?", opts: ["A. in Philadelphia", "B. in Toronto", "C. in Sacramento"], correct: "C" },
                 { id: 118, q: "To get her plane, she borrowed cash from one of her", opts: ["A. parents.", "B. friends.", "C. cousins."], correct: "A" },
                 { id: 119, q: "Based on the text, Evelyn's life was full of", opts: ["A. adventure.", "B. accidents.", "C. art."], correct: "A" }
+            ]
+        },
+        {
+            titulo: "Camping",
+            cuerpo: `In summer, people like to enjoy themselves in different ways. For example, some people like to stay at home with friends, but others like to get out of the city and go camping, so that they can <span id="hl-0" class="hl">explore the natural world and have some exciting adventures.</span><br><br>
+            People who go camping usually take everything they need with them in the car, including meat and vegetables to <span id="hl-1" class="hl">cook quick and easy meals on an open fire.</span> Also, many campsites have bathrooms, kitchens, showers, and electricity. However, it's <span id="hl-2" class="hl">important to make sure of this when booking the place</span> as most people choose to bring their own tent and decide to stay by a lake or the woods.<br><br>
+            Many families prefer this type of holiday over staying in a hotel because they feel they're close to nature and they can <span id="hl-3" class="hl">explore different places near the campsite.</span> They also know staying in campsites <span id="hl-4" class="hl">doesn't cost a lot of money.</span> People can have amazing adventures in the woods, some can <span id="hl-5" class="hl">walk for hours every day</span>, so they need to wear comfortable clothes. They must also take a backpack with some food and bottles of water, and wear a good pair of walking boots. After these pleasant walks, families can cook and tell some awesome stories around the fire at night and have <span id="hl-6" class="hl">one of the greatest experiences in life as a family.</span>`,
+            preguntas: [
+                { id: 113, q: "People go camping so they can", opts: ["A. plan unusual activities.", "B. lie down in the forest.", "C. meet other family members."], correct: "A" },
+                { id: 114, q: "What type of food can people prepare in the camp?", opts: ["A. fresh snacks", "B. simple dishes", "C. local food"], correct: "B" },
+                { id: 115, q: "Before leaving home, it is important to check", opts: ["A. how you'll travel.", "B. what the camping offers.", "C. which clothes to take."], correct: "B" },
+                { id: 116, q: "For many families, this is the best holiday activity because they can", opts: ["A. rest away from the water.", "B. rent modern equipment.", "C. camp near the woods."], correct: "C" },
+                { id: 117, q: "Why people prefer to stay in campsites?", opts: ["A. It's cheap.", "B. It's comfortable.", "C. It's wild."], correct: "A" },
+                { id: 118, q: "The walks in the woods are", opts: ["A. crowded.", "B. long.", "C. quick."], correct: "B" },
+                { id: 119, q: "The main topic of the text is", opts: ["A. what people think about camping.", "B. why camping is difficult.", "C. where to go camping."], correct: "A" }
             ]
         }
     ];
